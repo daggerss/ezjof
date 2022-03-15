@@ -20,11 +20,11 @@ def login(request):
                 if account.password == logpass:
                     return render(request, 'base.html')
     form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'login/login.html', {'form': form})
  
 def signup(request):
     departments = Department.objects.all()
-    return render(request, 'signup.html', {'departments':departments})
+    return render(request, 'login/signup.html', {'departments':departments})
 
 def signup_save(request):
     if request.method!='POST':

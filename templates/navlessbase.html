@@ -11,16 +11,7 @@
         <title>{% block title %}EZJOF{% endblock %}</title>
     </head>
     <body>
-        <header>
-            <nav id="navbar">
-            </nav>
-        </header>
-
-        <main>
-            <h1>{% block heading %}Dashboard{% endblock %}</h1>
-            {% block content %}{% endblock %}
-        </main>
-        
+        {% block content %}{% endblock %}
         {% block scripts %}{% endblock %}
     </body>
 </html>

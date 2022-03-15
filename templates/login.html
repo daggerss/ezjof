@@ -1,32 +1,22 @@
+{% extends 'navlessbase.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <link rel="shortcut icon" type="image/png" href="{% static 'Logomark.ico' %}"/>
-        {% block styles %}{% endblock %}
-        <title>{% block title %}EZJOF Login{% endblock %}</title>
-    </head>
-    <body>
-        <div class="loginflex center">
-            <header class="marg16">
-                <h1>Welcome back to</h1>
-                <img id="logotype" src="{% static 'images/Logotype.png' %}" alt="EZJOF Logo">
-            </header>
+{% block title %}EZJOF Login{% endblock %}
 
-            <main>
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token%}
-                    {{form}} 
-                    <input class="marg16 button" type="submit" value="Log in"></button>
-                </form>
-                <p class="reg semibold">Don't have an account? <a class ="reg semibold" href="{% url 'signup'%}">Sign up</a></p>
-            </main>
-        </div>
-        
-        {% block scripts %}{% endblock %}
-    </body>
-</html>
+{% block content %}
+    <div class="loginflex center">
+        <header class="marg16">
+            <h1>Welcome back to</h1>
+            <img id="logotype" src="{% static 'images/Logotype.png' %}" alt="EZJOF Logo">
+        </header>
+
+        <main>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token%}
+                {{form}} 
+                <input class="marg16 button" type="submit" value="Log in"></button>
+            </form>
+            <p class="reg semibold">Don't have an account? <a class ="reg semibold" href="{% url 'signup'%}">Sign up</a></p>
+        </main>
+    </div>
+{% endblock %}

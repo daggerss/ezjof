@@ -6,9 +6,10 @@
     padding: 0;
 }
 
-html {
+html
+{
     height: 100%;
-    background: #FAFAFB; /* fallback for old browsers */
+    background: #FAFAFB;
 }
 
 body {
@@ -35,6 +36,15 @@ h1
     line-height: 40px;
 }
 
+.subtitle
+{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 40px;
+    color: #959CAB;
+    margin-bottom: 12px;
+}
+
 .reg
 {
     font-size: 16px;
@@ -58,19 +68,40 @@ a
     width: 388px;
     height: 48px;
     padding: 10px 16px;
-    background: #00A6AF;
-    color: #FFFFFF;
     border-radius: 6px;
     font-weight: 600;
     font-size: 16px;
     line-height: 160%;
-    border: none;
 }
 
 .button:hover
 {
-    background: #1EC1C8;
     cursor: pointer;
+}
+
+.primary
+{
+    background: #00A6AF;
+    color: #FFFFFF;
+    border: none;
+}
+
+.primary:hover
+{
+    background: #1EC1C8;
+}
+
+.secondary
+{
+    background: none;
+    color: #00A6AF;
+    border: 1px solid #1EC1C8;
+    box-sizing: border-box;
+}
+
+.secondary:hover
+{
+    background: #DFF6F6;
 }
 
 /* EZJOF Form Styles */
@@ -79,6 +110,7 @@ a
     width: 388px;
     height: 48px;
     background: #FFFFFF;
+    color: #0F1D40;
     border: 1px solid #E2E4E8;
     box-sizing: border-box;
     border-radius: 6px;
@@ -117,8 +149,7 @@ a
 {
     text-align: center;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 24px auto;
 }
 
 .loginflex
@@ -136,25 +167,33 @@ a
     margin: 16px;
 }
 
-/* Form Styles */
+/* Signup Form Styles */
 #msform {
     text-align: center;
     position: relative;
-    margin-top: 30px;
 }
 
-#msform fieldset {
-    background: #FFF;
+#msform fieldset
+{
     border: 0 none;
-    border-radius: 0px;
-    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-    padding: 20px 30px;
-    box-sizing: border-box;
-    width: 80%;
-    margin: 0 10%;
+    width: 50%;
+    margin: 0 25%;
+    padding: 24px 0;
 
     /*stacking fieldsets above each other*/
     position: relative;
+}
+
+fieldset > .button
+{
+    margin: 8px auto;
+    display: block;
+}
+
+fieldset > input[type="checkbox"]
+{
+    display: block;
+    margin: 16px;
 }
 
 /*Hide all except first fieldset*/
@@ -162,83 +201,9 @@ a
     display: none;
 }
 
-/*inputs*/
-#msform input, #msform textarea {
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 0px;
-    margin-bottom: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    color: #2C3E50;
-    font-size: 13px;
-}
-
-#msform input:focus, #msform textarea:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #ee0979;
-    outline-width: 0;
-    transition: All 0.5s ease-in;
-    -webkit-transition: All 0.5s ease-in;
-    -moz-transition: All 0.5s ease-in;
-    -o-transition: All 0.5s ease-in;
-}
-
-/*buttons*/
-#msform .action-button {
-    width: 100px;
-    background: #ee0979;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 25px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px;
-}
-
-#msform .action-button:hover, #msform .action-button:focus {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;
-}
-
-#msform .action-button-previous {
-    width: 100px;
-    background: #C5C5F1;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 25px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px;
-}
-
-#msform .action-button-previous:hover, #msform .action-button-previous:focus {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px #C5C5F1;
-}
-
-/*headings*/
-.fs-title {
-    font-size: 18px;
-    text-transform: uppercase;
-    color: #2C3E50;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-    font-weight: bold;
-}
-
-.fs-subtitle {
-    font-weight: normal;
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 20px;
-}
-
 /*progressbar*/
 #progressbar {
-    margin-bottom: 30px;
+    margin-top: 32px;
     overflow: hidden;
     /*CSS counters to number the steps*/
     counter-reset: step;
@@ -246,26 +211,26 @@ a
 
 #progressbar li {
     list-style-type: none;
-    color: white;
+    color: #FFF;
     text-transform: uppercase;
-    font-size: 9px;
+    font-weight: 600;
+    font-size: 16px;
     width: 33.33%;
     float: left;
     position: relative;
-    letter-spacing: 1px;
 }
 
 #progressbar li:before {
     content: counter(step);
     counter-increment: step;
-    width: 24px;
-    height: 24px;
-    line-height: 26px;
+    width: 40px;
+    height: 40px;
+    line-height: 248%;
     display: block;
-    font-size: 12px;
-    color: #333;
-    background: white;
-    border-radius: 25px;
+    background: #FAFAFB;
+    color: #747C90;
+    border-radius: 50%;
+    border: 2px solid #E2E4E8;
     margin: 0 auto 10px auto;
 }
 
@@ -274,10 +239,10 @@ a
     content: '';
     width: 100%;
     height: 2px;
-    background: white;
+    background: #E2E4E8;
     position: absolute;
     left: -50%;
-    top: 9px;
+    top: 20px;
     z-index: -1; /*put it behind the numbers*/
 }
 
@@ -289,28 +254,7 @@ a
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
 #progressbar li.active:before, #progressbar li.active:after {
-    background: #ee0979;
-    color: white;
-}
-
-
-/* Not relevant to this form */
-.dme_link {
-    margin-top: 30px;
-    text-align: center;
-}
-.dme_link a {
-    background: #FFF;
-    font-weight: bold;
-    color: #ee0979;
-    border: 0 none;
-    border-radius: 25px;
-    cursor: pointer;
-    padding: 5px 25px;
-    font-size: 12px;
-}
-
-.dme_link a:hover, .dme_link a:focus {
-    background: #C5C5F1;
-    text-decoration: none;
+    background: #00A6AF;
+    color: #FFF;
+    border: none;
 }

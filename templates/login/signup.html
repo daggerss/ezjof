@@ -11,57 +11,50 @@
 
 {% block content %}
     <header>
-            <h1>Signup</h1>
+        <img id="logotype" class="center" src="{% static 'images/Logotype.png' %}" alt="EZJOF Logo">
     </header>
 
     <main>
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <form id="msform" method="post" action="{% url 'signup_save' %}">
-                    <!-- progressbar -->
-                    {% csrf_token %} 
-                    <ul id="progressbar">
-                        <li class="active">Personal Details</li>
-                        <li>Social Profiles</li>
-                        <li>Account Setup</li>
-                    </ul>
-                    <!-- fieldsets -->
-                    <fieldset>
-                        <h2 class="fs-title">Personal Details</h2>
-                        <h3 class="fs-subtitle">Tell us something more about you</h3>
-                        <input type="text" name="name" placeholder="Full Name"/>
-                        <input type="email" name="email" placeholder="Email"/>
-                        <input type="password" name="password" placeholder="Password"/>
-                        <input type="button" name="next" class="next action-button" value="Next"/>
-                    </fieldset>
-                    <fieldset>
-                        <h2 class="fs-title">Account Type</h2>
-                        <h3 class="fs-subtitle">Choose your account type</h3>
+        <form id="msform" method="post" action="{% url 'signup_save' %}">
+            <!-- progressbar -->
+            {% csrf_token %} 
+            <ul id="progressbar">
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <!-- fieldsets -->
+            <fieldset>
+                <h1>Welcome! Let's get you started.</h1>
+                <p class="subtitle">Fill in your credentials to begin.</p>
+                <input type="text" name="name" class="textfield reg semibold" placeholder="Full Name"/>
+                <input type="email" name="email" class="textfield reg semibold" placeholder="Email"/>
+                <input type="password" name="password" class="textfield reg semibold" placeholder="Password"/>
+                <input type="button" name="next" class="next button primary" value="Next"/>
+            </fieldset>
+            <fieldset>
+                <h1>What's your role?</h1>
+                <p class="subtitle">Choose whether you request or create pub materials.</p>
 
-                        <input id="clientbutton" type="radio" name="accounttype" value="Client" checked="true"/>
-                        <label for="client">Client</label><br>
-                        <input id="artistbutton" type="radio" name="accounttype" value="Artist"/>
-                        <label for="artist">Artist</label><br>
-                        
-                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                        <input type="button" name="next" class="next action-button" value="Next"/>
-                    </fieldset>
-                    <fieldset>
-                        <h2 class="fs-title">Department</h2>
-                        <h3 class="fs-subtitle">Choose your Department</h3>
-                        <select name="department_id">
-                            {% for entry in departments %}
-                                <option value="{{ entry.id }}">{{ entry.dname }}</option>
-                            {% endfor %}
-                        </select>
-                        <input type="checkbox" name="dhead"/>
-                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-                        <input type="submit" name="submit" class="submit action-button" value="Submit"/>
-                    </fieldset>
-                </form>
-                
-            </div>
-        </div>
+                <label><input id="clientbutton" type="radio" name="accounttype" value="Client" checked="true"/>Client</label>
+                <label><input id="artistbutton" type="radio" name="accounttype" value="Artist"/>Artist</label>
+                <br>
+                <input type="button" name="next" class="next button primary" value="Next"/>
+                <input type="button" name="previous" class="previous button secondary" value="Previous"/>
+            </fieldset>
+            <fieldset>
+                <h1>Which department are you from?</h1>
+                <p class="subtitle">Department heads have additional privileges!</p>
+                <select name="department_id">
+                    {% for entry in departments %}
+                        <option value="{{ entry.id }}">{{ entry.dname }}</option>
+                    {% endfor %}
+                </select>
+                <label><input type="checkbox" name="dhead"/>I am a department head.</label>
+                <input type="submit" name="submit" class="submit button primary" value="Create Account"/>
+                <input type="button" name="previous" class="previous button secondary" value="Previous"/>
+            </fieldset>
+        </form>
     </main>
 {% endblock %}
 

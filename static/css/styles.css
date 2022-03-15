@@ -86,6 +86,12 @@ a
     margin: 12px;
 }
 
+.textfield:focus
+{
+    outline: none;
+    border: 1px solid #B2B7C2;
+}
+
 ::-webkit-input-placeholder
 { /* Chrome/Opera/Safari */
     color: #B2B7C2;

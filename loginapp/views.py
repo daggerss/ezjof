@@ -30,13 +30,14 @@ def signup_save(request):
     if request.method!='POST':
         return HttpResponseRedirect(reverse('signup'))
     else:
-        account = Account.objects.create()
-        account.name = request.POST.get('name')
-        account.email = request.POST.get('email')
-        account.password = request.POST.get('password')
-        account.type = request.POST.get('accounttype')
-        account.department = Department.objects.get(id = request.POST.get('department_id'))
+        
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        type = request.POST.get('accounttype')
+        department = Department.objects.get(id = request.POST.get('department_id'))
         try:
+            account = Account.objects.create(name = name, email = email, password = password, type = type, department = department)
             account.save()
             return HttpResponseRedirect(reverse('home'))
         except:

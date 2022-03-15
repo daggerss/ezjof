@@ -1,6 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/*basic reset*/
+/* Basic */
 * {
     margin: 0;
     padding: 0;
@@ -8,16 +8,129 @@
 
 html {
     height: 100%;
-    background: #6441A5; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #6441A5, #2a0845); /* Chrome 10-25, Safari 5.1-6 */
+    background: #FAFAFB; /* fallback for old browsers */
 }
 
 body {
-    font-family: montserrat, arial, verdana;
-    background: transparent;
+    font-family: 'Work Sans', sans-serif;
+    color: #525C76;
 }
 
-/*form styles*/
+/* Branding */
+#logotype
+{
+    height: 64px;
+    width: auto;
+}
+
+/* Text Styles */
+h1, h2, h3, h4, h5, h6
+{
+    font-weight: 700;
+}
+
+h1
+{
+    font-size: 32px;
+    line-height: 40px;
+}
+
+.reg
+{
+    font-size: 16px;
+    line-height: 160%;
+}
+
+.semibold
+{
+    font-weight: 600;
+}
+
+a
+{
+    text-decoration: none;
+    color: #00A6AF;
+}
+
+/* Buttons */
+.button
+{
+    width: 388px;
+    height: 48px;
+    padding: 10px 16px;
+    background: #00A6AF;
+    color: #FFFFFF;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 160%;
+    border: none;
+}
+
+.button:hover
+{
+    background: #1EC1C8;
+    cursor: pointer;
+}
+
+/* EZJOF Form Styles */
+.textfield
+{
+    width: 388px;
+    height: 48px;
+    background: #FFFFFF;
+    border: 1px solid #E2E4E8;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 12px;
+}
+
+::-webkit-input-placeholder
+{ /* Chrome/Opera/Safari */
+    color: #B2B7C2;
+}
+
+::-moz-placeholder
+{ /* Firefox 19+ */
+    color: #B2B7C2;
+}
+
+:-ms-input-placeholder
+{ /* IE 10+ */
+    color: #B2B7C2;
+}
+
+:-moz-placeholder
+{ /* Firefox 18- */
+    color: #B2B7C2;
+}
+
+/* Scuffed Layout i'm sorri */
+.center
+{
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginflex
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    width: 388px;
+}
+
+.marg16
+{
+    margin: 16px;
+}
+
+/* Form Styles */
 #msform {
     text-align: center;
     position: relative;
@@ -25,7 +138,7 @@ body {
 }
 
 #msform fieldset {
-    background: white;
+    background: #FFF;
     border: 0 none;
     border-radius: 0px;
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
@@ -51,7 +164,6 @@ body {
     margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
-    font-family: montserrat;
     color: #2C3E50;
     font-size: 13px;
 }

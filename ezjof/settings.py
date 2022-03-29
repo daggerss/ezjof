@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
   
     'loginapp.apps.LoginappConfig',
+    'joffeedapp.apps.JoffeedappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

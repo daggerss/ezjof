@@ -7,10 +7,9 @@ from .views import *
 urlpatterns = [
     path('', login, name='login'),
 
-    path('home', home, name='home'),
-
     path('signup', signup, name='signup'),
 
-    path('signup_save', signup_save, name = 'signup_save')
-   
+    path('signup_save', signup_save, name ='signup_save'),
+
+    path('home', home, name='home')
 ] 

@@ -1,12 +1,14 @@
 import email
-from pyexpat.errors import messages
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render, reverse
+from pyexpat.errors import messages
+
 from .forms import *
+
 
 # Create your views here.
 def home(request):
-
     return render(request, 'base.html')
  
 def login(request):
@@ -30,7 +32,6 @@ def signup_save(request):
     if request.method!='POST':
         return HttpResponseRedirect(reverse('signup'))
     else:
-        
         name = request.POST.get('name')
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -42,4 +43,4 @@ def signup_save(request):
             return HttpResponseRedirect(reverse('home'))
         except:
             messages.error(request, 'Username or Email already Exists')
-            return HttpResponseRedirect(reverse('signup')) 
+            return HttpResponseRedirect(reverse('signup'))

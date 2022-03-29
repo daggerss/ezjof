@@ -2,19 +2,19 @@
 {% load static %}
 
 {% block content %}
-    <div class="loginflex center">
+    <div class="logincol center">
         <header class="marg16">
             <h1>Welcome back to</h1>
-            <img id="logotype" src="{% static 'images/Logotype.png' %}" alt="EZJOF Logo">
+            <img id="logotype" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
         </header>
 
         <main>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token%}
                 {{form}} 
-                <input class="marg16 button primary" type="submit" value="Log in"></button>
+                <input class="marg16 btn primary" type="submit" value="Log in"></button>
             </form>
-            <p class="reg semibold">Don't have an account? <a class ="reg semibold" href="{% url 'signup'%}">Sign up</a></p>
+            <p class="reg semibold dgray100">Don't have an account? <a class ="reg semibold" href="{% url 'signup'%}">Sign up</a></p>
         </main>
     </div>
 {% endblock %}

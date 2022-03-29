@@ -11,7 +11,7 @@
 
 {% block content %}
     <header>
-        <img id="logotype" class="center" src="{% static 'images/Logotype.png' %}" alt="EZJOF Logo">
+        <img id="logotype" class="center" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
     </header>
 
     <main>
@@ -27,34 +27,48 @@
             <fieldset>
                 <h1>Welcome! Let's get you started.</h1>
                 <p class="subtitle">Fill in your credentials to begin.</p>
-                <input type="text" name="name" class="textfield reg semibold" placeholder="Full Name"/>
-                <input type="email" name="email" class="textfield reg semibold" placeholder="Email"/>
-                <input type="password" name="password" class="textfield reg semibold" placeholder="Password"/>
-                <input type="button" name="next" class="next button primary" value="Next"/>
+                <input type="text" name="name" class="textfield reg semibold" placeholder="Full Name" required/>
+                <input type="email" name="email" class="textfield reg semibold" placeholder="Email" required/>
+                <input type="password" name="password" class="textfield reg semibold" placeholder="Password" required/>
+                <input type="button" name="next" class="next btn primary" value="Next"/>
             </fieldset>
             <fieldset>
                 <h1>What's your role?</h1>
                 <p class="subtitle">Choose whether you request or create pub materials.</p>
-
-                <label><input id="clientbutton" type="radio" name="accounttype" value="Client" checked="true"/>Client</label>
-                <label><input id="artistbutton" type="radio" name="accounttype" value="Artist"/>Artist</label>
-                <br>
-                <input type="button" name="next" class="next button primary" value="Next"/>
-                <input type="button" name="previous" class="previous button secondary" value="Previous"/>
+                <div class="loginrow signupradio">
+                    <input id="clientbutton" type="radio" name="accounttype" value="Client" required/>
+                    <label for="clientbutton" class="semibold">
+                        <img src="{% static 'images/icons/NotePencil.svg' %}" alt="Client icon">
+                        <span class="reg dgray900">Client</span>
+                        <span class="sm">You request pubmats</span>
+                    </label>
+                    <input id="artistbutton" type="radio" name="accounttype" value="Artist"/>
+                    <label for="artistbutton" class="semibold">
+                        <img src="{% static 'images/icons/Palette.svg' %}" alt="Artist icon">
+                        <span class="reg dgray900">Artist</span>
+                        <span class="sm">You create pubmats</span>
+                    </label>
+                </div>
+                <input type="button" name="next" class="next btn primary" value="Next"/>
+                <!-- <input type="button" name="previous" class="previous btn secondary" value="Previous"/> -->
             </fieldset>
             <fieldset>
                 <h1>Which department are you from?</h1>
                 <p class="subtitle">Department heads have additional privileges!</p>
-                <select name="department_id">
-                    {% for entry in departments %}
-                        <option value="{{ entry.id }}">{{ entry.dname }}</option>
-                    {% endfor %}
-                </select>
-                <label><input type="checkbox" name="dhead"/>I am a department head.</label>
-                <input type="submit" name="submit" class="submit button primary" value="Create Account"/>
-                <input type="button" name="previous" class="previous button secondary" value="Previous"/>
+                <div class="signupdept semibold">
+                    <select name="department_id" class="reg semibold">
+                        {% for entry in departments %}
+                            <option value="{{ entry.id }}">{{ entry.dname }}</option>
+                        {% endfor %}
+                    </select>
+                    <input id="dhead" type="checkbox" name="dhead"/>
+                    <label for="dhead" class="sm">I am a department head</label>
+                </div>
+                <input type="submit" name="submit" class="submit btn primary" value="Create Account"/>
+                <!-- <input type="button" name="previous" class="previous btn secondary" value="Previous"/> -->
             </fieldset>
         </form>
+        <p class="reg semibold loginabs dgray100">Already have an account? <a class ="reg semibold" href="{% url 'login'%}">Log in</a></p>
     </main>
 {% endblock %}
 

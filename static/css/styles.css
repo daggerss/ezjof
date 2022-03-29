@@ -48,12 +48,28 @@ h1
 .reg
 {
     font-size: 16px;
-    line-height: 160%;
+    line-height: 28px;
+}
+
+.sm
+{
+    font-size: 14px;
+    line-height: 24px;
 }
 
 .semibold
 {
     font-weight: 600;
+}
+
+p, .dgray900
+{
+    color: #0F1D40;
+}
+
+.dgray100
+{
+    color: #747C90;
 }
 
 a
@@ -63,7 +79,7 @@ a
 }
 
 /* Buttons */
-.button
+.btn
 {
     width: 388px;
     height: 48px;
@@ -74,9 +90,15 @@ a
     line-height: 160%;
 }
 
-.button:hover
+.btn:hover
 {
     cursor: pointer;
+}
+
+.btn:focus
+{
+    outline: none;
+    box-shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.12), 0px 0px 0px 3px #B0E9E9;
 }
 
 .primary
@@ -144,6 +166,68 @@ a
     color: #B2B7C2;
 }
 
+select
+{
+    width: 388px;
+    height: 48px;
+    font-family: 'Work Sans', sans-serif;
+    color: #0F1D40;
+    border: 1px solid #E2E4E8;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+}
+
+select:focus
+{
+    outline: none;
+    border: 1px solid #B2B7C2;
+}
+
+option
+{
+    padding: 8px 16px;
+    background: #FFFFFF;
+    border-radius: 6px;
+}
+
+option:hover, option:focus
+{
+    background: #DFF6F6;
+}
+
+input[type="checkbox"] + label
+{
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 12px 0;
+}
+
+input[type="checkbox"] + label:before
+{
+    content: '';
+    display: inline-block;
+    margin-right: 16px;
+    border: 2px solid #1EC1C8;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+}
+
+input[type="checkbox"]:focus + label:before
+{
+    box-shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.12), 0px 0px 0px 3px #B0E9E9;
+}
+
+input[type="checkbox"]:checked + label:before
+{
+    border: none;
+    background: url('/static/images/icons/CheckboxChecked.svg') -2px -2px no-repeat;
+}
+
 /* Scuffed Layout i'm sorri */
 .center
 {
@@ -152,7 +236,14 @@ a
     margin: 24px auto;
 }
 
-.loginflex
+.loginabs
+{
+    position: absolute;
+    bottom: 5%;
+    left: 40%;
+}
+
+.logincol
 {
     display: flex;
     flex-direction: column;
@@ -160,6 +251,18 @@ a
     align-items: center;
     padding: 40px;
     width: 388px;
+}
+
+.loginrow
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    width: 388px;
+    height: 192px;
+    margin: 24px auto;
 }
 
 .marg16
@@ -184,16 +287,10 @@ a
     position: relative;
 }
 
-fieldset > .button
+fieldset > .btn
 {
-    margin: 8px auto;
+    margin: 16px auto;
     display: block;
-}
-
-fieldset > input[type="checkbox"]
-{
-    display: block;
-    margin: 16px;
 }
 
 /*Hide all except first fieldset*/
@@ -201,7 +298,7 @@ fieldset > input[type="checkbox"]
     display: none;
 }
 
-/*progressbar*/
+/* Progress Bar */
 #progressbar {
     margin-top: 32px;
     overflow: hidden;
@@ -234,7 +331,7 @@ fieldset > input[type="checkbox"]
     margin: 0 auto 10px auto;
 }
 
-/*progressbar connectors*/
+/* Progress Bar Connectors*/
 #progressbar li:after {
     content: '';
     width: 100%;
@@ -257,4 +354,52 @@ fieldset > input[type="checkbox"]
     background: #00A6AF;
     color: #FFF;
     border: none;
+}
+
+/* Custom Inputs */
+.signupradio input[type="radio"], input[type="checkbox"]
+{
+    appearance: none;
+}
+
+.signupradio label
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 17.5px;
+
+    width: 192px;
+    height: 192px;
+
+    background: #FAFAFB;
+    border: 2px solid #E2E4E8;
+    box-sizing: border-box;
+    border-radius: 6px;
+
+    flex: none;
+    flex-grow: 0;
+    margin: 0px 16px;
+}
+
+.signupradio label:hover, .signupradio input[type="radio"]:focus + label
+{
+    border: 2px solid #1EC1C8;
+    cursor: pointer;
+}
+
+.signupradio input[type="radio"]:checked + label
+{
+    background: #DFF6F6;
+    border: 2px solid #1EC1C8;
+}
+
+.signupdept
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 388px;
+    margin: 24px auto;
 }

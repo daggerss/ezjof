@@ -23,7 +23,7 @@ def login(request):
     return render(request, 'login/login.html', {'form': form})
  
 def signup(request):
-    departments = Department.objects.all()
+    departments = Department.objects.all().order_by('dname')
     return render(request, 'login/signup.html', {'departments':departments})
 
 def signup_save(request):

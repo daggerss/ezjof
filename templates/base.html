@@ -26,7 +26,17 @@
             <h1>{% block heading %}JOFs{% endblock %}</h1>
             {% block content %}{% endblock %}
         </main>
-        
+        <footer>
+            <img id="footerlogo" src="{% static 'images/Logotype_White.svg' %}" alt="EZJOF Logo">
+            <p class="xs">Copyright © 2022. EZJOF. All rights reserved.</p>
+            <nav id="sitemap">
+                <a href="{% url 'home' %}">JOF Feed</a>
+                <a href="{% url 'home' %}">Current JOFs</a>
+                <a href="{% url 'home' %}">Rush JOFs</a>
+                <a href="{% url 'home' %}">Archive</a>
+                <a href="{% url 'home' %}">Settings</a>
+            </nav>
+        </footer>
         {% block scripts %}{% endblock %}
     </body>
 </html>

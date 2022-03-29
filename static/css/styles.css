@@ -19,7 +19,7 @@ body {
 
 /* Navigation */
 
-nav
+#navbar
 {
     background: #FFFFFF;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.08);
@@ -30,22 +30,64 @@ nav
     padding: 0 32px;
 }
 
-nav > #logotype
+#navbar > #logotype
 {
     height: 40px;
     width: auto;
     margin-right: auto;
 }
 
-nav > a
+#navbar > a
 {
     padding: 20px 24px;
-    font-weight: 600;
 }
 
-nav > a:hover
+#navbar > a:hover
 {
     color: #1EC1C8;
+}
+
+footer
+{
+    position: absolute;
+    height: 245px;
+    left: 0%;
+    right: 0%;
+    bottom: 0px;
+    background: #1EC1C8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer > #footerlogo
+{
+    width: auto;
+    height: 80px;
+    margin: 4px;
+}
+
+footer > p
+{
+    color: #FFFFFF;
+    margin: 4px;
+}
+
+#sitemap
+{
+    margin: 20px;
+}
+
+#sitemap > a
+{
+    color: #FFFFFF;
+    margin: 12px;
+}
+
+#sitemap > a:hover
+{
+    opacity: 0.75;
 }
 
 /* Branding */
@@ -95,6 +137,12 @@ main > h1
     line-height: 24px;
 }
 
+.xs
+{
+    font-size: 12px;
+    line-height: 16px;
+}
+
 .semibold
 {
     font-weight: 600;
@@ -114,6 +162,7 @@ a
 {
     text-decoration: none;
     color: #00A6AF;
+    font-weight: 600;
 }
 
 /* Buttons */

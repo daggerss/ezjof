@@ -227,10 +227,11 @@ a
     margin: 12px;
 }
 
-.textfield:focus
+.textfield:focus, select:focus
 {
     outline: none;
-    border: 1px solid #B2B7C2;
+    border: 1px solid #00A6AF;
+    box-shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.12), 0px 0px 0px 3px #B0E9E9;
 }
 
 ::-webkit-input-placeholder
@@ -264,12 +265,6 @@ select
     border-radius: 8px;
     padding: 12px;
     margin: 12px 0;
-}
-
-select:focus
-{
-    outline: none;
-    border: 1px solid #B2B7C2;
 }
 
 option

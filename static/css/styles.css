@@ -153,9 +153,19 @@ p, .dgray900
     color: #0F1D40;
 }
 
+.dgray400
+{
+    color: #525C76;
+}
+
 .dgray100
 {
     color: #747C90;
+}
+
+.lgray800
+{
+    color: #959CAB;
 }
 
 a
@@ -219,7 +229,7 @@ a
     width: 388px;
     height: 48px;
     background: #FFFFFF;
-    color: #0F1D40;
+    color: #525C76;
     border: 1px solid #E2E4E8;
     box-sizing: border-box;
     border-radius: 6px;
@@ -259,7 +269,7 @@ select
     width: 388px;
     height: 48px;
     font-family: 'Work Sans', sans-serif;
-    color: #0F1D40;
+    color: #525C76;
     border: 1px solid #E2E4E8;
     box-sizing: border-box;
     border-radius: 8px;

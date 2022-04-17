@@ -4,5 +4,10 @@ from django.conf import settings
 from .views import *
 
 urlpatterns = [
-    path('', home, name='home')
+    path('home/', home, name='home'),
+    path('jofcurrent', jofcurrent, name = 'jofcurrent'),
+    path('jofrush', jofrush, name = 'jofrush'),
+    path('jofpending', jofpending, name = 'jofpending'),
+    path('jofarchive', jofarchive, name = 'jofarchive'),
+    path('jofsettings', jofsettings, name = 'jofsettings')
 ] 

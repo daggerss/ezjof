@@ -14,11 +14,11 @@
         <header>
             <nav id="navbar">
                 <img id="logotype" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
-                <a href="{% url 'home' %}">JOF Feed</a>
-                <a href="{% url 'home' %}">Current JOFs</a>
-                <a href="{% url 'home' %}">Rush JOFs</a>
-                <a href="{% url 'home' %}">Archive</a>
-                <a href="{% url 'home' %}">Settings</a>
+                <a href="{% url 'jofpending' %}">Pending JOFs</a>
+                <a href="{% url 'jofcurrent' %}">Current JOFs</a>
+                <a href="{% url 'jofrush' %}">Rush JOFs</a>
+                <a href="{% url 'jofarchive' %}">Archive</a>
+                <a href="{% url 'jofsettings' %}">Settings</a>
             </nav>
         </header>
 
@@ -30,11 +30,11 @@
             <img id="footerlogo" src="{% static 'images/Logotype_White.svg' %}" alt="EZJOF Logo">
             <p class="xs">Copyright © 2022. EZJOF. All rights reserved.</p>
             <nav id="sitemap">
-                <a href="{% url 'home' %}">JOF Feed</a>
-                <a href="{% url 'home' %}">Current JOFs</a>
-                <a href="{% url 'home' %}">Rush JOFs</a>
-                <a href="{% url 'home' %}">Archive</a>
-                <a href="{% url 'home' %}">Settings</a>
+                <a href="{% url 'jofpending' %}">JOF Feed</a>
+                <a href="{% url 'jofpending' %}">Current JOFs</a>
+                <a href="{% url 'jofrush' %}">Rush JOFs</a>
+                <a href="{% url 'jofarchive' %}">Archive</a>
+                <a href="{% url 'jofsettings' %}">Settings</a>
             </nav>
         </footer>
         {% block scripts %}{% endblock %}

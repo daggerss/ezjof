@@ -7,4 +7,16 @@
 {% block heading %}Current JOFs{% endblock %}
 
 {% block content %}
+
+{% for jof in jofs %}
+
+    <p>
+        <li> {{jof.name}} </li>
+        <li> {{jof.date}}  </li>
+        <button>View</button>
+    </p> 
+    
+{% endfor %}
+
+
 {% endblock content%}

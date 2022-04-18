@@ -1,23 +1,26 @@
-<!-- View for: Head Artist only -->
+<!-- View for: Artist and Head-Artist Only -->
 
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Rush JOFs{% endblock %}
-{% block heading %}Rush JOFs{% endblock %}
+{% block title %}JOF Feed{% endblock %}
+{% block heading %}JOF Feed{% endblock %}
 
 {% block content %}
 
 {% for jof in jofs %}
 
-{% if jof.isrush %}
+    {% if jof.status != 4 and not jof.isrush %}
     <p>
         <li> {{jof.name}} </li>
         <li> {{jof.date}}  </li>
         <button>View</button>
         <button>Accept</button>
     </p> 
-{% endif %}
+    {% endif %}
+    
 {% endfor %}
+
+
 
 {% endblock content%}

@@ -14,15 +14,18 @@ def jofcurrent(request):
     jofs = JOF.objects.all()
     return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs})
 
-def jofpending(request):
-    jofs = JOF.objects.all()
-    return render(request, 'joffeed/pendingJOFs.html', {"jofs":jofs})
-
 def jofrush(request):
     jofs = JOF.objects.all()
     return render(request, 'joffeed/rushJOFs.html', {"jofs":jofs})
 
-def jofsettings(request):
+def joffeed(request):
     jofs = JOF.objects.all()
-    return render(request, 'joffeed/settingsJOF.html', {"jofs":jofs})
+    return render(request, 'joffeed/JOFfeed.html', {"jofs":jofs})
+
+def jofsettings(request):
+    return render(request, 'joffeed/settingsJOF.html')
+
+def jofview(request):
+    return render(request, 'joffeed/JOFview.html')
+
 

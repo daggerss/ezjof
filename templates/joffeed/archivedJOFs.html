@@ -7,4 +7,19 @@
 {% block heading %}Archived JOFs{% endblock %}
 
 {% block content %}
+
+{% for jof in jofs %}
+
+{% if jof.status == 4 %}
+    <p>
+        <li> {{jof.name}} </li>
+        <li> {{jof.date}}  </li>
+        <li> Completed </li>
+        <button>View</button>
+    </p> 
+{% endif %}
+    
+{% endfor %}
+
+
 {% endblock content%}

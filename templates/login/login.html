@@ -9,6 +9,13 @@
         </header>
 
         <main>
+            {% if messages %}
+            
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            
+            {% endif %}
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token%}
                 {{form}} 

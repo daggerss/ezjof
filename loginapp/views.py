@@ -29,8 +29,8 @@ def login(request):
                 if account.password == logpass:
                     jofs = JOF.objects.all()
                     return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs})
-                else:
-                    messages.info(request, 'Email or Password is incorrect')
+            else:
+                messages.info(request, 'Email or Password is incorrect')
                 
 
            

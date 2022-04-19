@@ -5,7 +5,6 @@ from .views import *
 
 urlpatterns = [
     path('joffeed', joffeed, name = 'joffeed'),
-    path('jofview', jofview, name = 'jofview'),
     path('jofcurrent', jofcurrent, name = 'jofcurrent'),
     path('jofrush', jofrush, name = 'jofrush'),
     path('jofarchive', jofarchive, name = 'jofarchive'),

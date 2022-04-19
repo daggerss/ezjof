@@ -9,6 +9,7 @@
         </header>
 
         <main>
+            <div class="reg semibold error600">
             {% if messages %}
             
                 {% for message in messages %}
@@ -16,6 +17,7 @@
                 {% endfor %}
             
             {% endif %}
+            </div>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token%}
                 {{form}} 

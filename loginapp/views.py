@@ -27,7 +27,7 @@ def login(request):
                 account = Account.objects.get(email = logemail)
                 return render(request, 'base.html')
             else:
-                messages.info(request, 'Email or Password is Incorrect')
+                messages.info(request, 'Email or Password is incorrect')
                 
 
            

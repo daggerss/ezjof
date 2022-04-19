@@ -8,16 +8,21 @@
 
 {% block content %}
 
-{% for jof in jofs %}
+<div class="flex-cards">
+    {% for jof in jofs %}
 
-{% if jof.isrush %}
-    <p>
-        <li> {{jof.name}} </li>
-        <li> {{jof.date}}  </li>
-        <button>View</button>
-        <button>Accept</button>
-    </p> 
-{% endif %}
-{% endfor %}
+        {% if jof.status != 4 and jof.isrush %}
+        <div class="card">
+            <h2> {{jof.name}} </h2>
+            <p class="med"> Blast Date: {{jof.date}}  </p>
+            <div class="btn-flex">
+                <button class="btn btn-half secondary">View</button>
+                <button class="btn btn-half primary">Accept</button>
+            </div>
+        </div> 
+        {% endif %}
+        
+    {% endfor %}
+</div>
 
 {% endblock content%}

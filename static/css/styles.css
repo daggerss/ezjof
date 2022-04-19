@@ -8,13 +8,19 @@
 
 html
 {
-    height: 100%;
     background: #FAFAFB;
 }
 
 body {
     font-family: 'Work Sans', sans-serif;
     color: #525C76;
+    min-height: 100vh;
+    position: relative;
+}
+
+main
+{
+    padding-bottom: 245px;
 }
 
 /* Navigation */
@@ -51,8 +57,7 @@ footer
 {
     position: absolute;
     height: 245px;
-    left: 0%;
-    right: 0%;
+    width: 100%;
     bottom: 0px;
     background: #1EC1C8;
     display: flex;
@@ -111,9 +116,13 @@ h1
 
 main > h1
 {
-    position: absolute;
-    left: 64px;
-    top: 96px;
+    margin: 32px 0px 16px 64px;
+}
+
+h2
+{
+    font-size: 24px;
+    line-height: 32px;
 }
 
 .subtitle
@@ -148,6 +157,18 @@ main > h1
     font-weight: 600;
 }
 
+.med
+{
+    font-weight: 500;
+}
+
+/* Colors */
+
+.prim700
+{
+    color: #009197;
+}
+
 p, .dgray900
 {
     color: #0F1D40;
@@ -168,9 +189,29 @@ p, .dgray900
     color: #959CAB;
 }
 
+.bginfo500
+{
+    background: #2561ED;
+}
+
+.bgsucc600
+{
+    background: #44AC21;
+}
+
+.bgwarn500
+{
+    background: #FFAD0D;
+}
+
 .error600
 {
     color: #DB2438;
+}
+
+.bgerror500
+{
+    background: #FF3236;
 }
 
 a
@@ -499,4 +540,57 @@ fieldset > .btn
     align-items: flex-start;
     width: 388px;
     margin: 24px auto;
+}
+
+/* JOF Database Styles */
+.flex-cards
+{
+    width: 1150px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 24px 32px;
+    padding: 0px;
+    margin: 32px 64px 128px;
+}
+
+.btn-flex
+{
+    display: flex;
+    flex-direction: row;
+    width: 304px;
+    gap: 8px;
+}
+
+.card
+{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 5px -1px rgba(0, 125, 128, 0.12);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px 24px 24px 32px;
+}
+
+.card > h2, .card > p, .btn-full
+{
+    width: 304px;
+}
+
+.btn-half
+{
+    width: 148px;
+}
+
+.chip
+{
+    text-align: center;
+    border-radius: 6px;
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 2px 8px;
 }

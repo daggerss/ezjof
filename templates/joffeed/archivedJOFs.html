@@ -8,18 +8,20 @@
 
 {% block content %}
 
-{% for jof in jofs %}
+<div class="flex-cards">
+    {% for jof in jofs %}
 
-{% if jof.status == 4 %}
-    <p>
-        <li> {{jof.name}} </li>
-        <li> {{jof.date}}  </li>
-        <li> Completed </li>
-        <button>View</button>
-    </p> 
-{% endif %}
-    
-{% endfor %}
+    {% if jof.status == 4 %}
+        <div class="card">
+            <h2 class="prim700 semibold"> {{jof.name}} </h2>
+            <p class="med"> Blast Date: {{jof.date}}  </p>
+            <span class="chip semibold bgsucc600"> Completed </span>
+            <button class="btn btn-full primary">View</button>
+        </div> 
+    {% endif %}
+        
+    {% endfor %}
+</div>
 
 
 {% endblock content%}

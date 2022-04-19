@@ -5,11 +5,13 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 from pyexpat.errors import messages
 
 from .forms import *
+from joffeedapp.models import JOF
 
 
 # Create your views here.
-def home(request):
-    return render(request, 'base.html')
+def jofcurrent(request):
+    jofs = JOF.objects.all()
+    return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs})
  
 def login(request):
     if request.method == 'POST':
@@ -20,7 +22,8 @@ def login(request):
             if Account.objects.filter(email = logemail).exists():
                 account = Account.objects.get(email = logemail)
                 if account.password == logpass:
-                    return render(request, 'base.html')
+                    jofs = JOF.objects.all()
+                    return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs})
     form = LoginForm()
     return render(request, 'login/login.html', {'form': form})
  
@@ -40,7 +43,7 @@ def signup_save(request):
         try:
             account = Account.objects.create(name = name, email = email, password = password, type = type, department = department)
             account.save()
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('jofcurrent'))
         except:
             messages.error(request, 'Username or Email already Exists')
             return HttpResponseRedirect(reverse('signup'))

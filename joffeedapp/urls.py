@@ -4,7 +4,6 @@ from django.conf import settings
 from .views import *
 
 urlpatterns = [
-    path('home/', home, name='home'),
     path('joffeed', joffeed, name = 'joffeed'),
     path('jofview', jofview, name = 'jofview'),
     path('jofcurrent', jofcurrent, name = 'jofcurrent'),

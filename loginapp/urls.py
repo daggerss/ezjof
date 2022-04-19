@@ -11,5 +11,5 @@ urlpatterns = [
 
     path('signup_save', signup_save, name ='signup_save'),
 
-    path('home/', home, name='home')
+    path('jofcurrent', jofcurrent, name = 'jofcurrent')
 ] 

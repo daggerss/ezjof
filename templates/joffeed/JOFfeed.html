@@ -16,7 +16,8 @@
             <h2> {{jof.name}} </h2>
             <p class="med"> Blast Date: {{jof.date}}  </p>
             <div class="btn-flex">
-                <button class="btn btn-half secondary">View</button>
+                {% comment %} You need to click on text inside button, not button itself {% endcomment %}
+                <button class="btn btn-half secondary"><a href="{% url 'jofview' jof.pk %}">View</a></button>
                 <button class="btn btn-half primary">Accept</button>
             </div>
         </div> 

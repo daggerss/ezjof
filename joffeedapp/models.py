@@ -1,6 +1,7 @@
 from django.db import models
 
 class JOF(models.Model):
+
     IS_PENDING = 1
     IN_PROGRESS = 2
     NOT_TAKEN = 3
@@ -30,18 +31,17 @@ class JOF(models.Model):
         (DOCX, 'Word Document'),
         (OTHER, 'Other'),
     )
-
+    
     status = models.IntegerField(choices=JOF_STATUS_CHOICES, default=IS_PENDING)
     isrush = models.BooleanField(default=False)
     name = models.CharField(max_length=100, default='')
     description = models.CharField(max_length=100, default='')
     date = models.DateField()
-    specifications = models.CharField(max_length=100, default='')
+    pegs = models.URLField(null=True, blank=True, default='')
+    summary = models.CharField(max_length=100, default='')
     type = models.IntegerField(choices=JOF_TYPE_CHOICES, default=OTHER)
     spiel = models.CharField(max_length=100, default='')
-    objects = models.Manager()
-
-
+    objects = models.Manager()        
 
 
 # Create your models here.

@@ -7,6 +7,9 @@
 {% block heading %}Current JOFs{% endblock %}
 
 {% block content %}
+<div>
+    <button><a href="{% url 'jofcreate'%}">+ New JOF</a></button>
+</div>
 
 <div class="flex-cards">
     {% for jof in jofs %}
@@ -25,8 +28,8 @@
             {% if jof.status == 3 %}
             <span class="chip semibold bgerror500"> Not taken </span>
             {% endif %}
-
-            <button class="btn btn-full primary">View</button>
+            {% comment %} You need to click on text inside button, not button itself {% endcomment %}
+            <button class="btn btn-full primary"><a href="{% url 'jofview' jof.pk %}">View</a></button>
         </div> 
     {% endif %}
         

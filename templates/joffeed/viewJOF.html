@@ -1,0 +1,23 @@
+<!-- View for: Artist and Head-Artist Only -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %}Open JOF: {{jof.name}} {% endblock %}
+{% block heading %}Open JOF: {{jof.name}}{% endblock %}
+
+{% block content %}
+
+<p>Blast Date: {{jof.date}}</p> 
+<p>{{jof.summary}}</p>
+<h3>Specifications</h3>
+<p>Deliverable Type: {{jof.get_type_display}}</p>
+<p>{{jof.description}}</p>
+<h3>Spiel</h3>
+<p>{{jof.spiel}}</p>
+
+<a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+
+{% endblock content%}

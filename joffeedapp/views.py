@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import JOF
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import JOF
 from .forms import *
 
 @login_required    
@@ -35,4 +36,20 @@ def jofview(request, pk):
 
 @login_required
 def jofcreate(request):
-    return render(request, 'joffeed/createJOF.html')
+    form=JOFForm
+    if request.method=='POST':
+        form=JOFForm(request.POST)
+        if form.is_valid():
+            new_isrush = form.cleaned_data['isrush']
+            new_name = form.cleaned_data['name']
+            new_description = form.cleaned_data['description']
+            new_date = form.cleaned_data['date']
+            new_pegs = form.cleaned_data['pegs']
+            new_summary = form.cleaned_data['summary']
+            new_type = form.cleaned_data['type']
+            new_spiel = form.cleaned_data['spiel']
+            new_JOF = JOF.objects.create(status = JOF.NOT_TAKEN, isrush = new_isrush, name = new_name,description = new_description,date = new_date,pegs = new_pegs,summary = new_summary,type = new_type,spiel = new_spiel)
+            new_JOF.save()
+            form=JOFForm
+            return render(request, 'joffeed/createJOF.html',{'form':form})
+    return render(request, 'joffeed/createJOF.html',{'form':form})

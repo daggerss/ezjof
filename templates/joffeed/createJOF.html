@@ -7,5 +7,9 @@
 {% block heading %}Create New JOF{% endblock %}
 
 {% block content %}
-
+<form method = "post">
+    {% csrf_token %}
+    {{form}}
+        <input class="button" type="submit" value="Submit"></button>
+</form>
 {% endblock content%}

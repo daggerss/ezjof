@@ -5,7 +5,7 @@ from .views import *
 
 
 urlpatterns = [
-    path('', login, name='index'),
+    path('', jofcurrent, name='index'),
 
     path('login', login, name='login'),
 

@@ -11,4 +11,5 @@ urlpatterns = [
     path('jofsettings', jofsettings, name = 'jofsettings'),
     path('jofview/<int:pk>', jofview, name = 'jofview'),
     path('jofcreate', jofcreate, name = 'jofcreate'),
+    path('jofaccept/<int:pk>', jofaccept, name = 'jofaccept'),
 ] 

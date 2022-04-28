@@ -1,4 +1,7 @@
+from asyncio.windows_events import NULL
 from django.db import models
+
+from loginapp.models import Account
 
 class JOF(models.Model):
 
@@ -41,7 +44,10 @@ class JOF(models.Model):
     summary = models.CharField(max_length=100, default='')
     type = models.IntegerField(choices=JOF_TYPE_CHOICES, default=OTHER)
     spiel = models.CharField(max_length=100, default='')
-    objects = models.Manager()        
+    client = models.ForeignKey(Account, related_name='Client', on_delete=models.CASCADE, default=NULL)
+    artist = models.ForeignKey(Account, related_name='Artist', on_delete=models.CASCADE, default=NULL, blank=True, null=True)
+    objects = models.Manager()  
+          
 
 
 # Create your models here.

@@ -11,5 +11,6 @@ class Account(models.Model):
     name = models.CharField(max_length=100,  default='')
     type = models.CharField(max_length=10, default='')
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
+    isHead = models.BooleanField(default=False)
     objects = models.Manager()
 

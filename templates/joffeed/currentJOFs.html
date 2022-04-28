@@ -7,9 +7,11 @@
 {% block heading %}Current JOFs{% endblock %}
 
 {% block content %}
+{% if account.type == 'Client'%}
 <div>
     <button><a href="{% url 'jofcreate'%}">+ New JOF</a></button>
 </div>
+{%endif%}
 
 <div class="flex-cards">
     {% for jof in jofs %}

@@ -1,4 +1,5 @@
 from ast import IsNot
+from asyncio.windows_events import NULL
 import email
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as user_login
@@ -7,15 +8,26 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 from pyexpat.errors import messages
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from .forms import *
 from joffeedapp.models import JOF
 
 
 # Create your views here.
+@login_required 
 def jofcurrent(request):
-    jofs = JOF.objects.all()
-    return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs})
- 
+    jofs = NULL
+    current_user = request.user
+    account = Account.objects.get(email = current_user.username)
+    if account.type=='Client':
+        jofs = JOF.objects.filter(client = account).order_by('date')
+        jofs = jofs.filter(~Q(status = 4))
+    elif account.type=='Artist':
+        jofs = JOF.objects.filter(artist = account).order_by('date')
+        jofs = jofs.filter(~Q(status = 4))
+    return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
+
+
 def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -27,8 +39,7 @@ def login(request):
                 user_login(request, user)
                 account = Account.objects.get(email = logemail)
                 if account.password == logpass:
-                    jofs = JOF.objects.all()
-                    return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs})
+                    return HttpResponseRedirect('jofcurrent')
             else:
                 messages.info(request, 'Email or Password is incorrect')
                 
@@ -51,13 +62,19 @@ def signup_save(request):
         password = request.POST.get('password')
         type = request.POST.get('accounttype')
         department = Department.objects.get(id = request.POST.get('department_id'))
+        isHead = request.POST.get('dhead') == 'on'
         try:
             user = User.objects.create_user(username = email,
                                  email=email,
                                  password=password)
-            account = Account.objects.create(name = name, email = email, password = password, type = type, department = department)
+            account = Account.objects.create(name = name, email = email, password = password, type = type, department = department, isHead = isHead)
             account.save()
-            return HttpResponseRedirect(reverse('jofcurrent'))
+            user = authenticate(request, username = email, password = password)
+            if user is not None:
+                user_login(request, user)
+                account = Account.objects.get(email = email)
+                if account.password == password:
+                    return HttpResponseRedirect('jofcurrent')
         except:
             messages.error(request, 'Username or Email already Exists')
             return HttpResponseRedirect(reverse('signup'))

@@ -42,9 +42,6 @@ def login(request):
                     return HttpResponseRedirect('jofcurrent')
             else:
                 messages.info(request, 'Email or Password is incorrect')
-                
-
-           
     form = LoginForm()
     return render(request, 'login/login.html', {'form': form})
 

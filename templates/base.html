@@ -26,18 +26,14 @@
             {%elif account.type == 'Client' %}
             <nav id="navbar">
                 <img id="logotype" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
-                
                 <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                
                 <a href="{% url 'jofarchive' %}">Archive</a>
-                
             </nav>
             {%elif account.type == 'Artist'%}
             <nav id="navbar">
                 <img id="logotype" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
                 <a href="{% url 'joffeed' %}">JOF Feed</a>
                 <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                
                 <a href="{% url 'jofarchive' %}">Archive</a>
                 <a href="{% url 'jofsettings' %}">Settings</a>
             </nav>
@@ -63,17 +59,13 @@
             
             {%elif account.type == 'Client' %}
             <nav id="sitemap">
-                
                 <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                
                 <a href="{% url 'jofarchive' %}">Archive</a>
-                
             </nav>
             {%elif account.type == 'Artist'%}
             <nav id="sitemap">
                 <a href="{% url 'joffeed' %}">JOF Feed</a>
                 <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                
                 <a href="{% url 'jofarchive' %}">Archive</a>
                 <a href="{% url 'jofsettings' %}">Settings</a>
             </nav>

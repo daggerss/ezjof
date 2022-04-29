@@ -20,7 +20,9 @@
         <div class="card">
             <h2 class="prim700 semibold"> {{jof.name}} </h2>
             <p class="med"> Blast Date: {{jof.date}}  </p>
-
+            {% if account.type == 'Artist' %}
+            <p class="med"> Department: {{jof.department.dname}}  </p>
+            {% endif %}
             {% if jof.status == 1 %}
             <span class="chip semibold bginfo500"> Pending approval </span>
             {% endif %}
@@ -30,8 +32,8 @@
             {% if jof.status == 3 %}
             <span class="chip semibold bgerror500"> Not taken </span>
             {% endif %}
-            {% comment %} You need to click on text inside button, not button itself {% endcomment %}
-            <button class="btn btn-full primary"><a href="{% url 'jofview' jof.pk %}">View</a></button>
+
+            <a href="{% url 'jofview' jof.pk %}"><button class="btn btn-full primary">View</button></a>
         </div> 
     {% endif %}
         

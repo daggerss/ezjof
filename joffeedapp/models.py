@@ -1,7 +1,7 @@
 from asyncio.windows_events import NULL
 from django.db import models
 
-from loginapp.models import Account
+from loginapp.models import Account, Department
 
 class JOF(models.Model):
 
@@ -35,7 +35,7 @@ class JOF(models.Model):
         (OTHER, 'Other'),
     )
     
-    status = models.IntegerField(choices=JOF_STATUS_CHOICES, default=IS_PENDING)
+    status = models.IntegerField(choices=JOF_STATUS_CHOICES, default=NOT_TAKEN)
     isrush = models.BooleanField(default=False)
     name = models.CharField(max_length=100, default='')
     description = models.CharField(max_length=100, default='')
@@ -46,6 +46,7 @@ class JOF(models.Model):
     spiel = models.CharField(max_length=100, default='')
     client = models.ForeignKey(Account, related_name='Client', on_delete=models.CASCADE, default=NULL)
     artist = models.ForeignKey(Account, related_name='Artist', on_delete=models.CASCADE, default=NULL, blank=True, null=True)
+    department = models.ForeignKey(Department, related_name='Department', on_delete=models.CASCADE, default=NULL)
     objects = models.Manager()  
           
 

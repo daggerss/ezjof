@@ -1,5 +1,6 @@
 from asyncio.windows_events import NULL
 import email
+from pickle import FALSE
 from telnetlib import STATUS
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -16,13 +17,10 @@ def jofarchive(request):
     jofs = JOF.objects.all().order_by('-date')
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
-    
-    
     return render(request, 'joffeed/archivedJOFs.html', {"jofs":jofs, "account":account})
 
 @login_required
 def jofcurrent(request):
-    
     jofs = NULL
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
@@ -32,7 +30,6 @@ def jofcurrent(request):
     elif account.type=='Artist':
         jofs = JOF.objects.filter(artist = account).order_by('date')
         jofs = jofs.filter(~Q(status = 4))
-    
     return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
 
 @login_required
@@ -40,7 +37,6 @@ def jofrush(request):
     jofs = JOF.objects.all().order_by('date')
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
-    
     return render(request, 'joffeed/rushJOFs.html', {"jofs":jofs, "account":account})
 
 @login_required
@@ -52,10 +48,8 @@ def jofsettings(request):
 @login_required
 def joffeed(request):
     jofs = JOF.objects.filter(status = JOF.NOT_TAKEN).order_by('date')
-    
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
-        
     return render(request, 'joffeed/JOFfeed.html', {"jofs":jofs, "account":account})
 
 @login_required
@@ -66,7 +60,20 @@ def jofaccept(request, pk):
     account = Account.objects.get(email = current_user.username)
     jof.artist = account
     jof.save()
-    return HttpResponseRedirect(reverse('joffeed'))
+    jofs = JOF.objects.filter(status = JOF.NOT_TAKEN).order_by('date')
+    return render(request, 'joffeed/JOFfeed.html', {"jofs":jofs, "account":account})
+
+@login_required
+def jofapprove(request, pk):
+    jof = JOF.objects.get(id = pk)
+    jof.isrush = FALSE
+    jof.status = JOF.NOT_TAKEN
+    current_user = request.user
+    account = Account.objects.get(email = current_user.username)
+    jof.artist = account
+    jof.save()
+    jofs = JOF.objects.filter(status = JOF.NOT_TAKEN).order_by('date')
+    return render(request, 'joffeed/JOFfeed.html', {"jofs":jofs, "account":account})
 
 @login_required
 def jofview(request, pk):
@@ -92,7 +99,8 @@ def jofcreate(request):
             new_type = form.cleaned_data['type']
             new_spiel = form.cleaned_data['spiel']
             new_client = account
-            new_JOF = JOF.objects.create(status = JOF.NOT_TAKEN, isrush = new_isrush, name = new_name,description = new_description,date = new_date,pegs = new_pegs,summary = new_summary,type = new_type,spiel = new_spiel, client = new_client, artist = None)
+            new_department = new_client.department
+            new_JOF = JOF.objects.create(status = JOF.NOT_TAKEN, isrush = new_isrush, name = new_name,description = new_description,date = new_date,pegs = new_pegs,summary = new_summary,type = new_type,spiel = new_spiel, client = new_client, department = new_department, artist = None)
             new_JOF.save()
             return HttpResponseRedirect(reverse('joffeed'))
     return render(request, 'joffeed/createJOF.html',{'form':form, 'account':account})

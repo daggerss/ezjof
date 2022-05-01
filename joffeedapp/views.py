@@ -17,6 +17,7 @@ def jofarchive(request):
     jofs = JOF.objects.all().order_by('-date')
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
+    
     return render(request, 'joffeed/archivedJOFs.html', {"jofs":jofs, "account":account})
 
 @login_required
@@ -27,9 +28,17 @@ def jofcurrent(request):
     if account.type=='Client':
         jofs = JOF.objects.filter(client = account).order_by('date')
         jofs = jofs.filter(~Q(status = 4))
+        if request.method == 'GET':
+            search = request.GET.get('search')
+            jofs = jofs.filter(name = search)
+            return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
     elif account.type=='Artist':
         jofs = JOF.objects.filter(artist = account).order_by('date')
         jofs = jofs.filter(~Q(status = 4))
+        if request.method == 'GET':
+            search = request.GET.get('search')
+            jofs = jofs.filter(name = search)
+            return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
     return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
 
 @login_required
@@ -66,11 +75,10 @@ def jofaccept(request, pk):
 @login_required
 def jofapprove(request, pk):
     jof = JOF.objects.get(id = pk)
-    jof.isrush = FALSE
+    jof.isrush = False
     jof.status = JOF.NOT_TAKEN
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
-    jof.artist = account
     jof.save()
     jofs = JOF.objects.filter(status = JOF.NOT_TAKEN).order_by('date')
     return render(request, 'joffeed/JOFfeed.html', {"jofs":jofs, "account":account})
@@ -102,5 +110,5 @@ def jofcreate(request):
             new_department = new_client.department
             new_JOF = JOF.objects.create(status = JOF.NOT_TAKEN, isrush = new_isrush, name = new_name,description = new_description,date = new_date,pegs = new_pegs,summary = new_summary,type = new_type,spiel = new_spiel, client = new_client, department = new_department, artist = None)
             new_JOF.save()
-            return HttpResponseRedirect(reverse('joffeed'))
+            return HttpResponseRedirect(reverse('jofcurrent'))
     return render(request, 'joffeed/createJOF.html',{'form':form, 'account':account})

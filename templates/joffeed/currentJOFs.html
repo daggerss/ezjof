@@ -7,36 +7,39 @@
 {% block heading %}Current JOFs{% endblock %}
 
 {% block content %}
+
+<form action="">
+    <input type="text" name="search" placeholder="Search by title" value="{{request.GET.title}}">
+    <input type="submit" value="Search">
+</form>
+
 {% if account.type == 'Client'%}
 <div>
-    <button><a href="{% url 'jofcreate'%}">+ New JOF</a></button>
+    <a href="{% url 'jofcreate'%}"></a><button>+ New JOF</button></a>
 </div>
 {%endif%}
 
 <div class="flex-cards">
     {% for jof in jofs %}
-
-    {% if jof.status != 4 %}
-        <div class="card">
-            <h2 class="prim700 semibold"> {{jof.name}} </h2>
-            <p class="med"> Blast Date: {{jof.date}}  </p>
-            {% if account.type == 'Artist' %}
-            <p class="med"> Department: {{jof.department.dname}}  </p>
-            {% endif %}
-            {% if jof.status == 1 %}
-            <span class="chip semibold bginfo500"> Pending approval </span>
-            {% endif %}
-            {% if jof.status == 2 %}
-            <span class="chip semibold bgwarn500"> In progress </span>
-            {% endif %}
-            {% if jof.status == 3 %}
-            <span class="chip semibold bgerror500"> Not taken </span>
-            {% endif %}
-
-            <a href="{% url 'jofview' jof.pk %}"><button class="btn btn-full primary">View</button></a>
-        </div> 
-    {% endif %}
-        
+        {% if jof.status != 4 %}
+            <div class="card">
+                <h2 class="prim700 semibold"> {{jof.name}} </h2>
+                <p class="med"> Blast Date: {{jof.date}}  </p>
+                {% if account.type == 'Artist' %}
+                <p class="med"> Department: {{jof.department.dname}}  </p>
+                {% endif %}
+                {% if jof.status == 1 %}
+                <span class="chip semibold bginfo500"> Pending approval </span>
+                {% endif %}
+                {% if jof.status == 2 %}
+                <span class="chip semibold bgwarn500"> In progress </span>
+                {% endif %}
+                {% if jof.status == 3 %}
+                <span class="chip semibold bgerror500"> Not taken </span>
+                {% endif %}
+                <a href="{% url 'jofview' jof.pk %}"><button class="btn btn-full primary">View</button></a>
+            </div> 
+        {% endif %}
     {% endfor %}
 </div>
 

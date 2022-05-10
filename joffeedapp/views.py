@@ -112,3 +112,13 @@ def jofcreate(request):
             new_JOF.save()
             return HttpResponseRedirect(reverse('jofcurrent'))
     return render(request, 'joffeed/createJOF.html',{'form':form, 'account':account})
+
+@login_required
+def jofsearch(request, path, jofs):
+    current_user = request.user
+    account = Account.objects.get(email = current_user.username)
+    if request.method == "POST":
+        query_name = request.POST.get('name',None)
+        if query_name:
+            results = jofs.objects.filter(name__contains=query_name)
+            return render(request, path, {"jofs":jofs, "account":account})

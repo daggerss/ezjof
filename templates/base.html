@@ -12,64 +12,51 @@
     </head>
     <body>
         <header>
-            
-            {%if account.isHead %}
             <nav id="navbar">
                 <img id="logotype" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
-                <a href="{% url 'joffeed' %}">JOF Feed</a>
+                {% if account.type == 'Artist' %}
+                    <a href="{% url 'joffeed' %}">JOF Feed</a>
+                {% endif %}
+
                 <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                <a href="{% url 'jofrush' %}">Rush JOFs</a>
+
+                {% if account.type == 'Artist' and account.isHead %}
+                    <a href="{% url 'jofrush' %}">Rush JOFs</a>
+                {% endif %}
+
                 <a href="{% url 'jofarchive' %}">Archive</a>
-                <a href="{% url 'jofsettings' %}">Settings</a>
+
+                {% if account.type == 'Artist' %}
+                    <a href="{% url 'jofsettings' %}">Settings</a>
+                {% endif %}
             </nav>
-            
-            {%elif account.type == 'Client' %}
-            <nav id="navbar">
-                <img id="logotype" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
-                <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                <a href="{% url 'jofarchive' %}">Archive</a>
-            </nav>
-            {%elif account.type == 'Artist'%}
-            <nav id="navbar">
-                <img id="logotype" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
-                <a href="{% url 'joffeed' %}">JOF Feed</a>
-                <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                <a href="{% url 'jofarchive' %}">Archive</a>
-                <a href="{% url 'jofsettings' %}">Settings</a>
-            </nav>
-            {%endif%}
         </header>
 
         <main>
+            {% block prehead %}{% endblock %}
             <h1>{% block heading %}JOFs{% endblock %}</h1>
             {% block content %}{% endblock %}
         </main>
         <footer>
             <img id="footerlogo" src="{% static 'images/Logotype_White.svg' %}" alt="EZJOF Logo">
             <p class="xs">Copyright © 2022. EZJOF. All rights reserved.</p>
-            
-            {%if account.isHead %}
             <nav id="sitemap">
-                <a href="{% url 'joffeed' %}">JOF Feed</a>
+                {% if account.type == 'Artist' %}
+                    <a href="{% url 'joffeed' %}">JOF Feed</a>
+                {% endif %}
+
                 <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                <a href="{% url 'jofrush' %}">Rush JOFs</a>
+
+                {% if account.type == 'Artist' and account.isHead %}
+                    <a href="{% url 'jofrush' %}">Rush JOFs</a>
+                {% endif %}
+
                 <a href="{% url 'jofarchive' %}">Archive</a>
-                <a href="{% url 'jofsettings' %}">Settings</a>
+
+                {% if account.type == 'Artist' %}
+                    <a href="{% url 'jofsettings' %}">Settings</a>
+                {% endif %}
             </nav>
-            
-            {%elif account.type == 'Client' %}
-            <nav id="sitemap">
-                <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                <a href="{% url 'jofarchive' %}">Archive</a>
-            </nav>
-            {%elif account.type == 'Artist'%}
-            <nav id="sitemap">
-                <a href="{% url 'joffeed' %}">JOF Feed</a>
-                <a href="{% url 'jofcurrent' %}">Current JOFs</a>
-                <a href="{% url 'jofarchive' %}">Archive</a>
-                <a href="{% url 'jofsettings' %}">Settings</a>
-            </nav>
-            {%endif%}
         </footer>
         {% block scripts %}{% endblock %}
     </body>

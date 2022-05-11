@@ -1,4 +1,4 @@
-<!-- View for: Artist and Head-Artist Only -->
+<!-- View for: Clients Only -->
 
 {% extends 'base.html' %}
 {% load static %}
@@ -7,49 +7,55 @@
 {% block heading %}Create New JOF{% endblock %}
 
 {% block content %}
-    <form method = "post">
+    <form method = "post" style="margin: 0px 64px;">
         {% csrf_token %}
         {{ form.non_field_errors }}
-        <div>
+        <div style="display:inline-block;">
             {{ form.isrush.errors }}
-            <label for="{{ form.isrush.id_for_label }}">Is Rush?</label>
             {{ form.isrush }}
+            <label class="sm semibold" for="{{ form.isrush.id_for_label }}">Rush?</label>
         </div>
-        <div>
-            {{ form.name.errors }}
-            <label for="{{ form.name.id_for_label }}">Name</label>
-            {{ form.name }}
+        <div class="fieldrow-flex">
+            <div class="field-flex">
+                {{ form.name.errors }}
+                <label class="label" for="{{ form.name.id_for_label }}">Name</label>
+                <input type="text" name="name" class="textfield" style="margin: 0px;" maxlength="100" required id="id_name">
+            </div>
+            <div class="field-flex">
+                {{ form.date.errors }}
+                <label class="label" for="{{ form.date.id_for_label }}">Blast Date (YYYY-MM-DD) </label>
+                <input type="text" name="date" class="textfield" style="margin: 0px;" required id="id_date">
+            </div>
         </div>
-        <div>
-            {{ form.date.errors }}
-            <label for="{{ form.date.id_for_label }}">Blast Date</label>
-            {{ form.date }}
-        </div>
-        <div>
+        <div class="field-flex" style="margin: 24px 0px 64px;">
             {{ form.summary.errors }}
-            <label for="{{ form.summary.id_for_label }}">Purpose</label>
-            {{ form.summary }}
+            <label class="label" for="{{ form.summary.id_for_label }}">Purpose</label>
+            <input type="text" name="summary" class="textarea" maxlength="500" required id="id_summary">
         </div>
-        <div>
-            {{ form.type.errors }}
-            <label for="{{ form.type.id_for_label }}">Type</label>
-            {{ form.type }}
+
+        <h2>Specifications</h2>
+        <div class="fieldrow-flex">
+            <div>
+                {{ form.type.errors }}
+                <label class="label" style="margin: -4px 0px" for="{{ form.type.id_for_label }}">Type</label>
+                {{ form.type }}
+            </div>
+            <div class="field-flex">
+                {{ form.pegs.errors }}
+                <label class="label" for="{{ form.pegs.id_for_label }}">Link to Pegs</label>
+                <input type="url" name="pegs" class="textfield" style="margin: 0px;" maxlength="200" required id="id_pegs">
+            </div>
         </div>
-        <div>
-            {{ form.pegs.errors }}
-            <label for="{{ form.pegs.id_for_label }}">Link to Pegs</label>
-            {{ form.pegs }}
-        </div>
-        <div>
+        <div class="field-flex" style="margin: 24px 0px;">
             {{ form.description.errors }}
-            <label for="{{ form.description.id_for_label }}">Description</label>
-            {{ form.description }}
+            <label class="label" for="{{ form.description.id_for_label }}">Contents</label>
+            <input type="text" name="description" class="textarea" maxlength="500" required id="id_description">
         </div>
-        <div>
+        <div class="field-flex" style="margin: 24px 0px 48px;">
             {{ form.spiel.errors }}
-            <label for="{{ form.spiel.id_for_label }}">Spiel</label>
-            {{ form.spiel }}
+            <label class="label" for="{{ form.spiel.id_for_label }}">Spiel (Leave blank if artist will provide)</label>
+            <input type="text" name="spiel" class="textarea" maxlength="500" id="id_spiel">
         </div>
-            <input class="button" type="submit" value="Submit"></button>
+            <input class="btn btn-half primary" style="margin-bottom: 128px;" type="submit" value="Submit"></button>
     </form>
 {% endblock content%}

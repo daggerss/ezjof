@@ -114,15 +114,16 @@ h1
     line-height: 40px;
 }
 
-main > h1
+main > h1, main > h2
 {
-    margin: 32px 0px 16px 64px;
+    margin: 32px 64px 16px;
 }
 
 h2
 {
     font-size: 24px;
     line-height: 32px;
+    font-weight: 500;
 }
 
 .subtitle
@@ -244,6 +245,16 @@ a
     box-shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.12), 0px 0px 0px 3px #B0E9E9;
 }
 
+.flex-btn
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+}
+
 .primary
 {
     background: #00A6AF;
@@ -270,6 +281,14 @@ a
 }
 
 /* EZJOF Form Styles */
+.label
+{
+    display: block;
+    font-weight: 600;
+    font-size: 12px;
+    color: #525C76;
+}
+
 .textfield
 {
     width: 388px;
@@ -283,7 +302,19 @@ a
     margin: 12px;
 }
 
-.textfield:focus, select:focus
+.textarea
+{
+    width: 813px;
+    height: 135px;
+    background: #FFFFFF;
+    color: #525C76;
+    border: 1px solid #E2E4E8;
+    box-sizing: border-box;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.textfield:focus, .textarea:focus, select:focus
 {
     outline: none;
     border: 1px solid #00A6AF;
@@ -593,4 +624,22 @@ fieldset > .btn
     color: #FFFFFF;
     font-size: 12px;
     padding: 2px 8px;
+}
+
+/* Create New JOF Styles */
+.field-flex
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 4px;
+}
+
+.fieldrow-flex
+{
+    display: flex;
+    flex-direction: row;
+    gap: 37px;
+    margin: 24px 0px;
 }

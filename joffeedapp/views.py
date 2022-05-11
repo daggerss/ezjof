@@ -1,6 +1,8 @@
 from asyncio.windows_events import NULL
+from cmath import log
 import email
-from pickle import FALSE
+import logging
+from pickle import FALSE, TRUE
 from telnetlib import STATUS
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,33 +14,56 @@ from .forms import *
 
 from loginapp.models import Account
 
+
+
 @login_required    
 def jofarchive(request):
     jofs = JOF.objects.all().order_by('-date')
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
     
+    if account.type=='Client':
+        jofs = jofs.filter(client__department = account.department).order_by('date')
+        if account.isHead==False:       
+            jofs = jofs.filter(client = account).order_by('date')
+            
+        
+        
+        
+    elif account.type=='Artist':
+        if account.isHead==False:
+            jofs = jofs.filter(artist = account).order_by('date')
+            j
+
+    if request.GET.get('search'):
+            search = request.GET.get('search')
+            jofs = jofs.filter(name__icontains = search)   
+
     return render(request, 'joffeed/archivedJOFs.html', {"jofs":jofs, "account":account})
 
 @login_required
 def jofcurrent(request):
-    jofs = NULL
+    jofs = JOF.objects.filter(~Q(status = 4))
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
+    
+    
     if account.type=='Client':
-        jofs = JOF.objects.filter(client = account).order_by('date')
-        jofs = jofs.filter(~Q(status = 4))
-        if request.method == 'GET':
-            search = request.GET.get('search')
-            jofs = jofs.filter(name = search)
-            return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
+        jofs = jofs.filter(client__department = account.department).order_by('date')
+        if account.isHead==False:       
+            jofs = jofs.filter(client = account).order_by('date')
+            
+        
+        
+        
     elif account.type=='Artist':
-        jofs = JOF.objects.filter(artist = account).order_by('date')
-        jofs = jofs.filter(~Q(status = 4))
-        if request.method == 'GET':
+        if account.isHead==False:
+            jofs = jofs.filter(artist = account).order_by('date')
+            j
+
+    if request.GET.get('search'):
             search = request.GET.get('search')
-            jofs = jofs.filter(name = search)
-            return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
+            jofs = jofs.filter(name__icontains = search)   
     return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
 
 @login_required
@@ -113,12 +138,4 @@ def jofcreate(request):
             return HttpResponseRedirect(reverse('jofcurrent'))
     return render(request, 'joffeed/createJOF.html',{'form':form, 'account':account})
 
-@login_required
-def jofsearch(request, path, jofs):
-    current_user = request.user
-    account = Account.objects.get(email = current_user.username)
-    if request.method == "POST":
-        query_name = request.POST.get('name',None)
-        if query_name:
-            results = jofs.objects.filter(name__contains=query_name)
-            return render(request, path, {"jofs":jofs, "account":account})
+

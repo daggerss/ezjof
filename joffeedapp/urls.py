@@ -13,5 +13,5 @@ urlpatterns = [
     path('jofcreate', jofcreate, name = 'jofcreate'),
     path('jofaccept/<int:pk>', jofaccept, name = 'jofaccept'),
     path('jofapprove/<int:pk>', jofapprove, name = 'jofapprove'),
-    path('jofsearch', jofsearch, name = 'jofsearch'),
+    
 ] 

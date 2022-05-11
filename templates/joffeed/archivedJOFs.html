@@ -9,11 +9,18 @@
 {% block content %}
 
 
+<form class="add_your_class" method="GET" action="" >
+    <input class="add_your_class" type="search" name="search"> 
+    <button class="add_your_class" type="submit"> Search </button>
+</form>
+
 {% if account.type == 'Client'%}
 <div>
     <a href="{% url 'jofcreate'%}"><button>+ New JOF</button></a>
 </div>
 {% endif %}
+
+
 
 <div class="flex-cards">
     {% for jof in jofs %}

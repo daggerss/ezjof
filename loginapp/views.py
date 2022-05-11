@@ -14,19 +14,6 @@ from joffeedapp.models import JOF
 
 
 # Create your views here.
-@login_required 
-def jofcurrent(request):
-    jofs = NULL
-    current_user = request.user
-    account = Account.objects.get(email = current_user.username)
-    if account.type=='Client':
-        jofs = JOF.objects.filter(client = account).order_by('date')
-        jofs = jofs.filter(~Q(status = 4))
-    elif account.type=='Artist':
-        jofs = JOF.objects.filter(artist = account).order_by('date')
-        jofs = jofs.filter(~Q(status = 4))
-    return render(request, 'joffeed/currentJOFs.html', {"jofs":jofs, "account":account})
-
 
 def login(request):
     if request.method == 'POST':

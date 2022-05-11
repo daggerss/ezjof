@@ -8,10 +8,10 @@
 
 {% block content %}
 
-<form action="{% url 'jofsearch' %}?path=self.request.get_full_path?jofs=jofs" method="POST">
-    {% csrf_token %} 
-    <input type="text" name="name">
-    <input type="submit" name="submit" value="Search">
+
+<form class="add_your_class" method="GET" action="" >
+    <input class="add_your_class" type="search" name="search"> 
+    <button class="add_your_class" type="submit"> Search </button>
 </form>
 <br>
 {% if account.type == 'Client'%}

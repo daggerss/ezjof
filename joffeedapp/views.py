@@ -33,7 +33,6 @@ def jofarchive(request):
     elif account.type=='Artist':
         if account.isHead==False:
             jofs = jofs.filter(artist = account).order_by('date')
-            j
 
     if request.GET.get('search'):
             search = request.GET.get('search')
@@ -59,7 +58,6 @@ def jofcurrent(request):
     elif account.type=='Artist':
         if account.isHead==False:
             jofs = jofs.filter(artist = account).order_by('date')
-            j
 
     if request.GET.get('search'):
             search = request.GET.get('search')
@@ -77,7 +75,7 @@ def jofrush(request):
 def jofsettings(request):
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
-    return render(request, 'joffeed/settingsJOF.html')
+    return render(request, 'joffeed/settingsJOF.html', {"account":account})
 
 @login_required
 def joffeed(request):

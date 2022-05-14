@@ -1,5 +1,6 @@
 from asyncio.windows_events import NULL
 from cmath import log
+from datetime import datetime
 import email
 import logging
 from pickle import FALSE, TRUE
@@ -9,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .models import JOF
+from .models import *
 from .forms import *
 
 from loginapp.models import Account
@@ -136,4 +137,44 @@ def jofcreate(request):
             return HttpResponseRedirect(reverse('jofcurrent'))
     return render(request, 'joffeed/createJOF.html',{'form':form, 'account':account})
 
+@login_required
+def joftracker(request, pk):
+    jof = JOF.objects.get(id=pk)
+    current_user = request.user
+    account = Account.objects.get(email = current_user.username)
+    comments = Comment.objects.filter(jof = jof)
+    if account.type=='Client':
+        if jof.status == 3:
+            status = 'Not Taken'
+            draft = NULL
+        if jof.status == 1 or jof.status == 2:
+            status = 'In Progress'
+            if Draft.objects.filter(jof = jof).exists():
+                draft = Draft.objects.filter(jof = jof)
+            else:
+                draft = NULL
+        return render(request, 'joffeed/JOFtracker.html', {"jof":jof, "account":account,"draft":draft,"status":status,"comments":comments})
+    elif account.type=='Artist':
+        status = 'Is Pending'
+        draft = NULL
+        form=DraftForm
+        comments = Comment.objects.filter(jof = jof)
+        if request.method=='POST':      
+            form = DraftForm(request.POST)
+            if form.is_valid():
+                new_file = form.cleaned_data['file']
+                jof.spiel = request.POST.get('spiel')
+                new_draft = Draft.objects.create(jof=jof, file = new_file)
+                new_draft.save()
+        return render(request, 'joffeed/JOFtracker.html', {"jof":jof, "account":account,"draft":draft,"status":status,"comments":comments,"form":form})
 
+@login_required
+def commentadd(request, pk):
+    jof = JOF.objects.get(id=pk)
+    current_user = request.user
+    account = Account.objects.get(email = current_user.username)
+    if request.method == "POST":
+        content = request.POST.get('commentinput')
+        comment = Comment.objects.create(jof=jof, commenter=account, date=datetime.today(),content=content)
+        comment.save()
+    return redirect('joftracker', pk)

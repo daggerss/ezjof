@@ -1,0 +1,57 @@
+<!-- View for: All -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+<p>{{ status }}</p>
+
+{% block title %} {{jof.name}} {% endblock %}
+{% block heading %} {{jof.name}}{% endblock %}
+
+{% block content %}
+
+{% if jof.isrush %}
+<p>Rush | Blast Date: {{jof.date}}</p> 
+{% else %}
+<p>Standard | Blast Date: {{jof.date}}</p> 
+{% endif %}
+
+<p></p>
+{% if jof.status == 1 or jof.status == 2 %}
+    {% if draft %}
+    <button> Approve Deliverable </button>
+        {% for obj in draft %}
+        {{obj.file}}
+        {{obj.source.spiel}}
+        {% endfor %}
+    {% endif %}
+{% endif %}
+<form method="POST">
+    <div>
+        <label class="label" for="{{ form.file.id_for_label }}"></label>
+        {{ form.file }}
+    </div>
+    <div>
+        <label for="spiel">Spiel</label>
+        <input id="spiel" type="textarea" name="spiel"/>
+    </div>
+</form>
+<br>
+<h2>Comments</h2>
+<br>
+{% if comments %}
+    {% for comment in comments %}
+    <p>{{comment.commenter.name}} {{comment.date}}</p>
+    <p>{{comment.content}}</p>
+    <br>
+    {% endfor %}
+{% endif %}
+<form method="post" action="{% url 'commentadd' jof.pk %}">
+    {% csrf_token %}
+    <input name="commentinput" type="textarea" />
+    <input type="submit" name="submit" value="Post Comment"/>
+</form>
+<br>
+<a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+
+{% endblock content%}

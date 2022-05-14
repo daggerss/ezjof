@@ -49,6 +49,16 @@ class JOF(models.Model):
     department = models.ForeignKey(Department, related_name='Department', on_delete=models.CASCADE, default=NULL)
     objects = models.Manager()  
           
+class Draft(models.Model):
+    jof = models.ForeignKey(JOF, on_delete=models.CASCADE, default=NULL)
+    file = models.FileField(null=True, blank=True, default='')
+    objects = models.Manager()
 
+class Comment(models.Model):
+    jof = models.ForeignKey(JOF, on_delete=models.CASCADE, default=NULL)
+    commenter = models.ForeignKey(Account, on_delete=models.CASCADE, default=NULL)
+    date = models.DateField()
+    content = models.CharField(max_length=500)
+    objects = models.Manager()
 
 # Create your models here.

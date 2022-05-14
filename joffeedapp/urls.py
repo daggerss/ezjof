@@ -13,5 +13,6 @@ urlpatterns = [
     path('jofcreate', jofcreate, name = 'jofcreate'),
     path('jofaccept/<int:pk>', jofaccept, name = 'jofaccept'),
     path('jofapprove/<int:pk>', jofapprove, name = 'jofapprove'),
-    
+    path('joftracker/<int:pk>', joftracker, name = 'joftracker'),
+    path('commentadd/<int:pk>', commentadd, name = 'commentadd'),
 ] 

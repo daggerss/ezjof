@@ -36,7 +36,7 @@
                 {% if jof.status == 3 %}
                 <span class="chip semibold bgerror500"> Not taken </span>
                 {% endif %}
-                <a href="{% url 'jofview' jof.pk %}"><button class="btn btn-full primary">View</button></a>
+                <a href="{% url 'joftracker' jof.pk %}"><button class="btn btn-full primary">View</button></a>
             </div> 
         {% endif %}
     {% endfor %}

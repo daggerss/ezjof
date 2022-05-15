@@ -20,7 +20,7 @@ body {
 
 main
 {
-    padding-bottom: 309px;
+    padding: 0px 64px 309px;
 }
 
 /* Navigation */
@@ -116,7 +116,7 @@ h1
 
 main > h1, main > h2
 {
-    margin: 16px 64px 16px;
+    margin: 16px 0px;
 }
 
 h2
@@ -128,7 +128,7 @@ h2
 
 main > p
 {
-    margin: 8px 64px;
+    margin: 8px 0px;
 }
 
 .subtitle
@@ -446,7 +446,7 @@ input[type="checkbox"]:checked + label:before
 
 .margmain
 {
-    margin: 8px 64px;
+    margin: 8px 0px;
 }
 
 div.spacer
@@ -600,7 +600,7 @@ fieldset > .btn
     align-items: flex-start;
     gap: 24px 32px;
     padding: 0px;
-    margin: 32px 64px;
+    margin: 32px 0px;
 }
 
 .btn-flex
@@ -643,7 +643,7 @@ fieldset > .btn
     padding: 2px 8px;
 }
 
-/* Create New JOF Styles */
+/* Form Styles */
 .field-flex
 {
     display: flex;
@@ -659,4 +659,10 @@ fieldset > .btn
     flex-direction: row;
     gap: 37px;
     margin: 24px 0px;
+}
+
+/* Indiv JOF Tracker Styles */
+.pub
+{
+    width: 495px;
 }

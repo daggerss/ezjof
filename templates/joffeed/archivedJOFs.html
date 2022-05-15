@@ -9,13 +9,13 @@
 {% block content %}
 
 
-<form style="display: inline-block; margin: 24px 56px; vertical-align: middle;" method="GET" action="" >
+<form style="display: inline-block; margin: 24px -8px; vertical-align: middle;" method="GET" action="" >
     <input class="textfield" style="display:inline; width: 283px; height: 32px;" type="search" name="search"> 
     <button class="btn flex-btn secondary" style="display:inline; width: 32px; height: 32px;" type="submit"><img src="{% static 'images/icons/Search.svg' %}"></button>
 </form>
 
 {% if account.type == 'Client'%}
-    <a href="{% url 'jofcreate'%}"><button class="btn flex-btn btn-half primary" style="float: right; margin: 24px 64px;">
+    <a href="{% url 'jofcreate'%}"><button class="btn flex-btn btn-half primary" style="float: right; margin: 24px 0px;">
         <img src="{% static 'images/icons/Plus.svg' %}"> New JOF</button>
     </a>
 {%endif%}

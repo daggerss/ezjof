@@ -7,7 +7,7 @@
 {% block heading %}<div class="spacer"></div>Create New JOF{% endblock %}
 
 {% block content %}
-    <form method = "post" style="margin: 0px 64px;">
+    <form method = "post">
         {% csrf_token %}
         {{ form.non_field_errors }}
         <div style="display:inline-block;">

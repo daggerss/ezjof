@@ -49,16 +49,16 @@ def jofcurrent(request):
     
     
     if account.type=='Client':
-        jofs = jofs.filter(client__department = account.department).order_by('date')
+        jofs = jofs.filter(client__department = account.department).order_by('status')
         if account.isHead==False:       
-            jofs = jofs.filter(client = account).order_by('date')
+            jofs = jofs.filter(client = account).order_by('status')
             
         
         
         
     elif account.type=='Artist':
         if account.isHead==False:
-            jofs = jofs.filter(artist = account).order_by('date')
+            jofs = jofs.filter(artist = account).order_by('-status')
 
     if request.GET.get('search'):
             search = request.GET.get('search')

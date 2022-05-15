@@ -25,10 +25,6 @@
                 {% endif %}
 
                 <a href="{% url 'jofarchive' %}">Archive</a>
-
-                {% if account.type == 'Artist' %}
-                    <a href="{% url 'jofsettings' %}">Settings</a>
-                {% endif %}
             </nav>
         </header>
 
@@ -52,10 +48,6 @@
                 {% endif %}
 
                 <a href="{% url 'jofarchive' %}">Archive</a>
-
-                {% if account.type == 'Artist' %}
-                    <a href="{% url 'jofsettings' %}">Settings</a>
-                {% endif %}
             </nav>
         </footer>
         {% block scripts %}{% endblock %}

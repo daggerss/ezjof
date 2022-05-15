@@ -24,7 +24,12 @@
 <br>
 <p>{{jof.description}}</p>
 <br>
+{%if account == jof.client and drafts.count > 0 and jof.status != 4 %}
+    
 
+<a href="{% url 'joffinish' jof.pk %}"><button>Approve Deliverable</button></a>
+<br>
+{%endif%}
 <div id="drafts">
     <div class="tab">
         {%for draft in drafts%}

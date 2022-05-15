@@ -177,3 +177,10 @@ def draftupload(request, pk):
         jof.status = 1
         jof.save()
     return redirect('joftracker', pk)
+
+@login_required
+def joffinish(request, pk):
+    jof = JOF.objects.get(id=pk)
+    jof.status = 4
+    jof.save()  
+    return redirect('joftracker', pk)

@@ -4,22 +4,26 @@
 {% load static %}
 
 {% block title %}JOF Feed{% endblock %}
-{% block heading %}JOF Feed{% endblock %}
+{% block heading %}<div class="spacer"></div>JOF Feed{% endblock %}
 
 {% block content %}
 
 <div class="flex-cards">
     {% for jof in jofs %}
 
-        {% if jof.status != 4 and not jof.isrush %}
+        {% if jof.status != 4 %}
         <div class="card">
             <h2> {{jof.name}} </h2>
-            <p class="med"> Blast Date: {{jof.date}}  </p>
+            {% if jof.isrush %}
+            <p class="med">Rush | Blast Date: {{jof.date}}</p>
+            {% else %}
+            <p class="med">Standard | Blast Date: {{jof.date}}</p>
+            {% endif %}
             {% if account.type == 'Artist' %}
             <p class="med"> Department: {{jof.department.dname}}  </p>
             {% endif %}
             <div class="btn-flex">
-                <a href="{% url 'jofview' jof.pk %}"><button class="btn btn-half secondary">View</button></a>
+                <a href="{% url 'joftracker' jof.pk %}"><button class="btn btn-half secondary">View</button></a>
                 <a href="{% url 'jofaccept' jof.pk%}"><button class="btn btn-half primary">Accept</button></a>
             </div>
         </div> 

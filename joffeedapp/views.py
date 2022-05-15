@@ -73,12 +73,6 @@ def jofrush(request):
     return render(request, 'joffeed/rushJOFs.html', {"jofs":jofs, "account":account})
 
 @login_required
-def jofsettings(request):
-    current_user = request.user
-    account = Account.objects.get(email = current_user.username)
-    return render(request, 'joffeed/settingsJOF.html', {"account":account})
-
-@login_required
 def joffeed(request):
     jofs = JOF.objects.filter(status = JOF.NOT_TAKEN).order_by('date')
     current_user = request.user
@@ -106,13 +100,6 @@ def jofapprove(request, pk):
     jof.save()
     jofs = JOF.objects.filter(status = JOF.NOT_TAKEN).order_by('date')
     return render(request, 'joffeed/JOFfeed.html', {"jofs":jofs, "account":account})
-
-@login_required
-def jofview(request, pk):
-    jof = JOF.objects.get(id=pk)
-    current_user = request.user
-    account = Account.objects.get(email = current_user.username)
-    return render(request, 'joffeed/viewJOF.html', {"jof":jof})
 
 @login_required
 def jofcreate(request):

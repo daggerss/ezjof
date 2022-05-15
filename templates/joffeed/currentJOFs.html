@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block title %}Current JOFs{% endblock %}
-{% block heading %}Current JOFs{% endblock %}
+{% block heading %}<div class="spacer"></div>Current JOFs{% endblock %}
 
 {% block content %}
 
@@ -23,7 +23,11 @@
         {% if jof.status != 4 %}
             <div class="card">
                 <h2 class="prim700 semibold"> {{jof.name}} </h2>
-                <p class="med"> Blast Date: {{jof.date}}  </p>
+                {% if jof.isrush %}
+                <p class="med">Rush | Blast Date: {{jof.date}}</p>
+                {% else %}
+                <p class="med">Standard | Blast Date: {{jof.date}}</p>
+                {% endif %}
                 {% if account.type == 'Artist' %}
                 <p class="med"> Department: {{jof.department.dname}}  </p>
                 {% endif %}

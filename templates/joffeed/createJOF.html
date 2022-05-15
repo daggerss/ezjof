@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block title %}Create New JOF{% endblock %}
-{% block heading %}Create New JOF{% endblock %}
+{% block heading %}<div class="spacer"></div>Create New JOF{% endblock %}
 
 {% block content %}
     <form method = "post" style="margin: 0px 64px;">
@@ -56,6 +56,6 @@
             <label class="label" for="{{ form.spiel.id_for_label }}">Spiel (Leave blank if artist will provide)</label>
             <input type="text" name="spiel" class="textarea" maxlength="500" id="id_spiel">
         </div>
-            <input class="btn btn-half primary" style="margin-bottom: 128px;" type="submit" value="Submit"></button>
+            <input class="btn btn-half primary" style="margin-bottom: 64px;" type="submit" value="Submit"></button>
     </form>
 {% endblock content%}

@@ -20,7 +20,7 @@ body {
 
 main
 {
-    padding-bottom: 245px;
+    padding-bottom: 309px;
 }
 
 /* Navigation */
@@ -116,7 +116,7 @@ h1
 
 main > h1, main > h2
 {
-    margin: 32px 64px 16px;
+    margin: 16px 64px 16px;
 }
 
 h2
@@ -124,6 +124,11 @@ h2
     font-size: 24px;
     line-height: 32px;
     font-weight: 500;
+}
+
+main > p
+{
+    margin: 8px 64px;
 }
 
 .subtitle
@@ -439,6 +444,18 @@ input[type="checkbox"]:checked + label:before
     margin: 16px;
 }
 
+.margmain
+{
+    margin: 8px 64px;
+}
+
+div.spacer
+{
+    font-size: 0;
+    height: 16px;
+    line-height: 0;
+}
+
 /* Signup Form Styles */
 #msform {
     text-align: center;
@@ -583,14 +600,14 @@ fieldset > .btn
     align-items: flex-start;
     gap: 24px 32px;
     padding: 0px;
-    margin: 32px 64px 128px;
+    margin: 32px 64px;
 }
 
 .btn-flex
 {
     display: flex;
     flex-direction: row;
-    width: 304px;
+    width: fit-content;
     gap: 8px;
 }
 

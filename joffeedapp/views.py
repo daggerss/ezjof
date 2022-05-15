@@ -142,21 +142,21 @@ def joftracker(request, pk):
     jof = JOF.objects.get(id=pk)
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
-    comments = Comment.objects.filter(jof = jof)
+    comments = Comment.objects.filter(draft__jof = jof)
     drafts = Draft.objects.filter(jof = jof)
 
     return render(request, 'joffeed/JOFtracker.html', {"jof":jof, "account":account,"comments":comments, "drafts":drafts})
 
 @login_required
 def commentadd(request, pk):
-    jof = JOF.objects.get(id=pk)
+    draft = Draft.objects.get(id=pk)
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
     if request.method == "POST":
         content = request.POST.get('commentinput')
-        comment = Comment.objects.create(jof=jof, commenter=account, date=datetime.today(),content=content)
+        comment = Comment.objects.create(draft=draft, commenter=account, date=datetime.today(),content=content)
         comment.save()
-    return redirect('joftracker', pk)
+    return redirect('joftracker', draft.jof.id)
 
 @login_required
 def draftupload(request, pk):

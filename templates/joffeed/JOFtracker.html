@@ -28,8 +28,11 @@
 <div id="drafts">
     <div class="tab">
         {%for draft in drafts%}
-            <button class="tabbutton" onclick="showDraft(event, 'draft{{draft.dnum}}')">Draft #{{draft.dnum}}</button>
+            <button class="tabbutton" onclick="showDraft(event, 'draft{{draft.dnum}}', 'comments{{draft.dnum}}')">Draft #{{draft.dnum}}</button>
         {%endfor%}
+        {%if account == jof.artist and drafts.count < 3%}
+        <button class="tabbutton" onclick="showDraft(event, 'newdraftbox', null)">New Draft</button>
+        {%endif%}
     </div>
     {%for draft in drafts%}
     
@@ -44,7 +47,7 @@
             img.src = "{{draft.file.url}}";
             div.id = "draft{{draft.dnum}}"
             div.append(dnum, spiel, img);
-            div.className+=" draftBox";
+            div.className+=" draftbox";
             div.style.display = "none";
             
             document.getElementById("drafts").append(div);
@@ -54,31 +57,39 @@
     {%endfor%}
 </div>
 <script>
-    function showDraft(evt, draftId) {
+    function showDraft(evt, draftId, commentId) {
         
-        var i, drafts, buttons;
+        var i, drafts, buttons, comments;
       
-        // Get all elements with class="tabcontent" and hide them
-        drafts = document.getElementsByClassName("draftBox");
+        
+        drafts = document.getElementsByClassName("draftbox");
         for (i = 0; i < drafts.length; i++) {
           drafts[i].style.display = "none";
         }
       
-        // Get all elements with class="tablinks" and remove the class "active"
+        comments = document.getElementsByClassName("commentbox");
+        for (i = 0; i < comments.length; i++) {
+          comments[i].style.display = "none";
+        }
+
         buttons = document.getElementsByClassName("tabbuttons");
         for (i = 0; i < buttons.length; i++) {
           buttons[i].className = buttons[i].className.replace(" active", "");
         }
       
-        // Show the current tab, and add an "active" class to the button that opened the tab
+        
         document.getElementById(draftId).style.display = "block";
+        if(commentId!=null)
+        {
+        document.getElementById(commentId).style.display = "block";
+        }
         evt.currentTarget.className += " active";
       }
 </script>
 
 
 {% if account == jof.artist and drafts.count < 3%}
-<div>
+<div id="newdraftbox" class="draftbox" style="display: none">
     <p>Upload New Draft</p>
     <form method="post" action="{% url 'draftupload' jof.pk %}" enctype="multipart/form-data">
         {% csrf_token %}
@@ -88,24 +99,32 @@
         <input type="submit" name="submit" value="Submit Draft"/>
     </form>
 </div>
+
 <br>
-<button>Upload New Draft</button>
+
 {%endif%}
 
-<h2>Comments</h2>
-<br>
-{% if comments %}
-    {% for comment in comments %}
-    <p>{{comment.commenter.name}} {{comment.date}}</p>
-    <p>{{comment.content}}</p>
-    <br>
-    {% endfor %}
-{% endif %}
-<form method="post" action="{% url 'commentadd' jof.pk %}">
-    {% csrf_token %}
-    <input name="commentinput" type="textarea" />
-    <input type="submit" name="submit" value="Post Comment"/>
-</form>
+{%for draft in drafts%}
+    <div id="comments{{draft.dnum}}" class="commentbox" style="display:none">
+        <h2>Comments</h2>
+        <br>
+        {% if comments %}
+            {% for comment in comments %}
+                {%if comment.draft == draft%}
+                    <p>{{comment.commenter.name}} {{comment.date}}</p>
+                    <p>{{comment.content}}</p>
+                    <br>
+                {%endif%}
+            {% endfor %}
+            
+        {% endif %}
+        <form method="post" action="{% url 'commentadd' draft.pk %}">
+            {% csrf_token %}
+            <input name="commentinput" type="textarea" />
+            <input type="submit" name="submit" value="Post Comment"/>
+        </form>
+    </div>
+{%endfor%}
 <br>
 <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
 

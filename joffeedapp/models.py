@@ -57,7 +57,7 @@ class Draft(models.Model):
     objects = models.Manager()
 
 class Comment(models.Model):
-    jof = models.ForeignKey(JOF, on_delete=models.CASCADE, default=NULL)
+    draft = models.ForeignKey(Draft, on_delete=models.CASCADE, default=NULL)
     commenter = models.ForeignKey(Account, on_delete=models.CASCADE, default=NULL)
     date = models.DateField()
     content = models.CharField(max_length=500)

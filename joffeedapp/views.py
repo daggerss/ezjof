@@ -143,6 +143,10 @@ def commentadd(request, pk):
         content = request.POST.get('commentinput')
         comment = Comment.objects.create(draft=draft, commenter=account, date=datetime.today(),content=content)
         comment.save()
+        dcount = Draft.objects.filter(jof = draft.jof).count()
+        if(dcount<3):
+            draft.jof.status = 2
+            draft.jof.save()
     return redirect('joftracker', draft.jof.id)
 
 @login_required
@@ -157,4 +161,13 @@ def draftupload(request, pk):
         file = request.FILES.get('fileinput')
         draft = Draft.objects.create(jof=jof, spiel=spiel, dnum = dnum, file=file)
         draft.save()
+        jof.status = 1
+        jof.save()
+    return redirect('joftracker', pk)
+
+@login_required
+def joffinish(request, pk):
+    jof = JOF.objects.get(id=pk)
+    jof.status = 4
+    jof.save()  
     return redirect('joftracker', pk)

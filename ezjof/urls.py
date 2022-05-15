@@ -21,3 +21,5 @@ urlpatterns = [
     path ('', include('joffeedapp.urls')),
     path ('admin/', admin.site.urls),
 ]
+
+

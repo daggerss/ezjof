@@ -51,7 +51,9 @@ class JOF(models.Model):
           
 class Draft(models.Model):
     jof = models.ForeignKey(JOF, on_delete=models.CASCADE, default=NULL)
+    spiel = models.CharField(max_length=500, default='')
     file = models.FileField(null=True, blank=True, default='')
+    dnum = models.IntegerField()
     objects = models.Manager()
 
 class Comment(models.Model):

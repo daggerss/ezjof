@@ -3,7 +3,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<p>{{ status }}</p>
+<p>{{ jof.status }}</p>
 
 {% block title %} {{jof.name}} {% endblock %}
 {% block heading %} {{jof.name}}{% endblock %}
@@ -16,27 +16,82 @@
 <p>Standard | Blast Date: {{jof.date}}</p> 
 {% endif %}
 
-<p></p>
-{% if jof.status == 1 or jof.status == 2 %}
-    {% if draft %}
-    <button> Approve Deliverable </button>
-        {% for obj in draft %}
-        {{obj.file}}
-        {{obj.source.spiel}}
-        {% endfor %}
-    {% endif %}
-{% endif %}
-<form method="POST">
-    <div>
-        <label class="label" for="{{ form.file.id_for_label }}"></label>
-        {{ form.file }}
-    </div>
-    <div>
-        <label for="spiel">Spiel</label>
-        <input id="spiel" type="textarea" name="spiel"/>
-    </div>
-</form>
+<h2>Specifications</h2>
+
+<p>Deliverable Type: {{jof.get_type_display}}</p>
 <br>
+<p>Deliverable Pegs: <a>{{jof.pegs}}</a></p>
+<br>
+<p>{{jof.description}}</p>
+<br>
+
+<div id="drafts">
+    <div class="tab">
+        {%for draft in drafts%}
+            <button class="tabbutton" onclick="showDraft(event, 'draft{{draft.dnum}}')">Draft #{{draft.dnum}}</button>
+        {%endfor%}
+    </div>
+    {%for draft in drafts%}
+    
+        <script>
+            
+            var div = document.createElement("div");
+            var dnum = document.createElement("p");
+            dnum.innerHTML = "Draft Number: {{draft.dnum}}";
+            var spiel = document.createElement("p");
+            spiel.innerHTML = "Draft Spiel: {{draft.spiel}}";
+            var img = document.createElement('img');
+            img.src = "{{draft.file.url}}";
+            div.id = "draft{{draft.dnum}}"
+            div.append(dnum, spiel, img);
+            div.className+=" draftBox";
+            div.style.display = "none";
+            
+            document.getElementById("drafts").append(div);
+
+            
+        </script>
+    {%endfor%}
+</div>
+<script>
+    function showDraft(evt, draftId) {
+        
+        var i, drafts, buttons;
+      
+        // Get all elements with class="tabcontent" and hide them
+        drafts = document.getElementsByClassName("draftBox");
+        for (i = 0; i < drafts.length; i++) {
+          drafts[i].style.display = "none";
+        }
+      
+        // Get all elements with class="tablinks" and remove the class "active"
+        buttons = document.getElementsByClassName("tabbuttons");
+        for (i = 0; i < buttons.length; i++) {
+          buttons[i].className = buttons[i].className.replace(" active", "");
+        }
+      
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(draftId).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+</script>
+
+
+{% if account == jof.artist and drafts.count < 3%}
+<div>
+    <p>Upload New Draft</p>
+    <form method="post" action="{% url 'draftupload' jof.pk %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input name="fileinput" type="file"/>
+        <input name="spielinput" type="textarea" />
+        <br>
+        <input type="submit" name="submit" value="Submit Draft"/>
+    </form>
+</div>
+<br>
+<button>Upload New Draft</button>
+{%endif%}
+
 <h2>Comments</h2>
 <br>
 {% if comments %}

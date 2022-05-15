@@ -15,4 +15,7 @@ urlpatterns = [
     path('jofapprove/<int:pk>', jofapprove, name = 'jofapprove'),
     path('joftracker/<int:pk>', joftracker, name = 'joftracker'),
     path('commentadd/<int:pk>', commentadd, name = 'commentadd'),
-] 
+    path('draftupload/<int:pk>', draftupload, name = 'draftupload'),
+]  
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -143,30 +143,9 @@ def joftracker(request, pk):
     current_user = request.user
     account = Account.objects.get(email = current_user.username)
     comments = Comment.objects.filter(jof = jof)
-    if account.type=='Client':
-        if jof.status == 3:
-            status = 'Not Taken'
-            draft = NULL
-        if jof.status == 1 or jof.status == 2:
-            status = 'In Progress'
-            if Draft.objects.filter(jof = jof).exists():
-                draft = Draft.objects.filter(jof = jof)
-            else:
-                draft = NULL
-        return render(request, 'joffeed/JOFtracker.html', {"jof":jof, "account":account,"draft":draft,"status":status,"comments":comments})
-    elif account.type=='Artist':
-        status = 'Is Pending'
-        draft = NULL
-        form=DraftForm
-        comments = Comment.objects.filter(jof = jof)
-        if request.method=='POST':      
-            form = DraftForm(request.POST)
-            if form.is_valid():
-                new_file = form.cleaned_data['file']
-                jof.spiel = request.POST.get('spiel')
-                new_draft = Draft.objects.create(jof=jof, file = new_file)
-                new_draft.save()
-        return render(request, 'joffeed/JOFtracker.html', {"jof":jof, "account":account,"draft":draft,"status":status,"comments":comments,"form":form})
+    drafts = Draft.objects.filter(jof = jof)
+
+    return render(request, 'joffeed/JOFtracker.html', {"jof":jof, "account":account,"comments":comments, "drafts":drafts})
 
 @login_required
 def commentadd(request, pk):
@@ -177,4 +156,18 @@ def commentadd(request, pk):
         content = request.POST.get('commentinput')
         comment = Comment.objects.create(jof=jof, commenter=account, date=datetime.today(),content=content)
         comment.save()
+    return redirect('joftracker', pk)
+
+@login_required
+def draftupload(request, pk):
+    jof = JOF.objects.get(id=pk)
+    current_user = request.user
+    account = Account.objects.get(email = current_user.username)
+    
+    dnum = Draft.objects.filter(jof = jof).count() + 1
+    if request.method == "POST":
+        spiel = request.POST.get('spielinput')
+        file = request.FILES.get('fileinput')
+        draft = Draft.objects.create(jof=jof, spiel=spiel, dnum = dnum, file=file)
+        draft.save()
     return redirect('joftracker', pk)

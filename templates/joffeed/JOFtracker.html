@@ -3,7 +3,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<p>{{ jof.status }}</p>
+{% block prehead %}
+    <a href="{{request.META.HTTP_REFERER|escape}}" class="flex-btn" style="width: 71px; margin: 27px 0px;"><img src="{% static 'images/icons/LeftArrow.svg' %}"> Back</a>
+
+    {% if jof.status == 1 %}
+    <span class="chip semibold bginfo500 margmain"> Pending approval </span>
+    {% endif %}
+    {% if jof.status == 2 %}
+    <span class="chip semibold bgwarn500 margmain"> In progress </span>
+    {% endif %}
+    {% if jof.status == 3 %}
+    <span class="chip semibold bgerror500 margmain"> Not taken </span>
+    {% endif %}
+
+{% endblock %}
 
 {% block title %} {{jof.name}} {% endblock %}
 {% block heading %} {{jof.name}}{% endblock %}
@@ -11,126 +24,163 @@
 {% block content %}
 
 {% if jof.isrush %}
-<p>Rush | Blast Date: {{jof.date}}</p> 
+<p class="reg med dgray100">Rush | Blast Date: {{jof.date}}</p>
 {% else %}
-<p>Standard | Blast Date: {{jof.date}}</p> 
+<p class="reg med dgray100">Standard | Blast Date: {{jof.date}}</p>
 {% endif %}
 
+<p class="reg">{{jof.summary}}</p>
+
 <h2>Specifications</h2>
+<p class="reg med dgray100">Deliverable Type: {{jof.get_type_display}}</p>
+<p class="reg med dgray100">Deliverable Pegs: <a href="{{jof.pegs}}">{{jof.pegs}}</a></p>
+<p class="reg">{{jof.description}}</p>
 
-<p>Deliverable Type: {{jof.get_type_display}}</p>
-<br>
-<p>Deliverable Pegs: <a>{{jof.pegs}}</a></p>
-<br>
-<p>{{jof.description}}</p>
-<br>
-{%if account == jof.client and drafts.count > 0 and jof.status != 4 %}
-    
+{% if jof.status == 3 %}
+    <h2>Spiel</h2>
+    {% if jof.spiel %}
+    <p class="reg">{{jof.spiel}}</p>
+    {% elif jof.spiel != None %}
+    <p class="reg error600">No spiel was provided by the client.</p>
+    {% endif %}
 
-<a href="{% url 'joffinish' jof.pk %}"><button>Approve Deliverable</button></a>
-<br>
-{%endif%}
-<div id="drafts">
-    <div class="tab">
-        {%for draft in drafts%}
-            <button class="tabbutton" onclick="showDraft(event, 'draft{{draft.dnum}}', 'comments{{draft.dnum}}')">Draft #{{draft.dnum}}</button>
-        {%endfor%}
-        {%if account == jof.artist and drafts.count < 3%}
-        <button class="tabbutton" onclick="showDraft(event, 'newdraftbox', null)">New Draft</button>
-        {%endif%}
-    </div>
-    {%for draft in drafts%}
-    
-        <script>
-            
-            var div = document.createElement("div");
-            var dnum = document.createElement("p");
-            dnum.innerHTML = "Draft Number: {{draft.dnum}}";
-            var spiel = document.createElement("p");
-            spiel.innerHTML = "Draft Spiel: {{draft.spiel}}";
-            var img = document.createElement('img');
-            img.src = "{{draft.file.url}}";
-            div.id = "draft{{draft.dnum}}"
-            div.append(dnum, spiel, img);
-            div.className+=" draftbox";
-            div.style.display = "none";
-            
-            document.getElementById("drafts").append(div);
+    <a href="{% url 'jofaccept' jof.pk%}"><button class="btn btn-half primary margmain" style="margin-top: 32px;">Accept</button></a>
 
+{% else %}
+    {%if account == jof.client and drafts.count > 0 and jof.status != 4 %}
+    <a href="{% url 'joffinish' jof.pk %}"><button class="btn btn-flex primary">Approve Deliverable</button></a>
+    {%endif%}
+
+    <!-- Draft Tabs -->
+    {% if drafts.count > 0 %}
+        <div id="drafts" class="margmain">
+            <div class="tab">
+                {%for draft in drafts%}
+                    <button class="tabbutton sm semibold" onclick="showDraft(event, 'draft{{draft.dnum}}', 'comments{{draft.dnum}}')" id="tabbutton{{draft.dnum}}">Draft #{{draft.dnum}}</button>
+                {%endfor%}
+            </div>
+            {%for draft in drafts%}
+                <script>
+                    var div = document.createElement("div");
+                    var spiel = document.createElement("p");
+                    spiel.innerHTML = "{{draft.spiel}}";
+                    var img = document.createElement('img');
+                    img.className+=" pub";
+                    img.src = "{{draft.file.url}}";
+                    div.id = "draft{{draft.dnum}}"
+                    div.append(img, spiel);
+                    div.className+=" draftbox deliv";
+                    div.style.display = "none";
+                    
+                    document.getElementById("drafts").append(div);
+                </script>
+            {%endfor%}
+        </div>
+    {% endif %}
+    <script>
+        function showDraft(evt, draftId, commentId) {
             
-        </script>
-    {%endfor%}
-</div>
-<script>
-    function showDraft(evt, draftId, commentId) {
+            var i, drafts, buttons, comments;
         
-        var i, drafts, buttons, comments;
-      
+            drafts = document.getElementsByClassName("draftbox");
+            for (i = 0; i < drafts.length; i++) {
+            drafts[i].style.display = "none";
+            }
         
-        drafts = document.getElementsByClassName("draftbox");
-        for (i = 0; i < drafts.length; i++) {
-          drafts[i].style.display = "none";
-        }
-      
-        comments = document.getElementsByClassName("commentbox");
-        for (i = 0; i < comments.length; i++) {
-          comments[i].style.display = "none";
-        }
+            comments = document.getElementsByClassName("commentbox");
+            for (i = 0; i < comments.length; i++) {
+            comments[i].style.display = "none";
+            }
 
-        buttons = document.getElementsByClassName("tabbuttons");
-        for (i = 0; i < buttons.length; i++) {
-          buttons[i].className = buttons[i].className.replace(" active", "");
-        }
-      
+            buttons = document.getElementsByClassName("tabbutton");
+            for (i = 0; i < buttons.length; i++) {
+            buttons[i].className = buttons[i].className.replace(" tabactive", "");
+            }
         
-        document.getElementById(draftId).style.display = "block";
-        if(commentId!=null)
-        {
-        document.getElementById(commentId).style.display = "block";
-        }
-        evt.currentTarget.className += " active";
-      }
-</script>
-
-
-{% if account == jof.artist and drafts.count < 3%}
-<div id="newdraftbox" class="draftbox" style="display: none">
-    <p>Upload New Draft</p>
-    <form method="post" action="{% url 'draftupload' jof.pk %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input name="fileinput" type="file"/>
-        <input name="spielinput" type="textarea" />
-        <br>
-        <input type="submit" name="submit" value="Submit Draft"/>
-    </form>
-</div>
-
-<br>
-
-{%endif%}
-
-{%for draft in drafts%}
-    <div id="comments{{draft.dnum}}" class="commentbox" style="display:none">
-        <h2>Comments</h2>
-        <br>
-        {% if comments %}
-            {% for comment in comments %}
-                {%if comment.draft == draft%}
-                    <p>{{comment.commenter.name}} {{comment.date}}</p>
-                    <p>{{comment.content}}</p>
-                    <br>
-                {%endif%}
-            {% endfor %}
             
-        {% endif %}
-        <form method="post" action="{% url 'commentadd' draft.pk %}">
+            document.getElementById(draftId).style.display = "block";
+            if(commentId!=null)
+            {
+            document.getElementById(commentId).style.display = "block";
+            }
+            evt.currentTarget.className += " tabactive";
+
+            if (draftId != "newdraftbox")
+            {
+                document.getElementById("uploadButton").classList.remove("tabactive");
+            }
+        }
+    </script>
+
+    <!-- Upload -->
+    {% if account == jof.artist and drafts.count < 3%}
+    <div id="newdraftbox" class="draftbox margmain" style="display: none">
+        <h2>Upload New Draft</h2>
+        <form method="post" action="{% url 'draftupload' jof.pk %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <input name="commentinput" type="textarea" />
-            <input type="submit" name="submit" value="Post Comment"/>
+            <div class="fieldrow-flex">
+                <div class="field-flex pub">
+                    <label class="label" for="id_file">File Upload</label>
+                    <input name="fileinput" type="file" id="id_file" />
+                </div>
+                <div class="field-flex">
+                    <label class="label" for="id_spiel">Spiel</label>
+                    <input class="textarea" style="width: 707px;" name="spielinput" type="textarea" id="id_spiel" />
+                </div>
+            </div>
+            <input class="btn btn-flex primary" type="submit" name="submit" value="Submit Draft"/>
         </form>
     </div>
-{%endfor%}
-<br>
-<a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+    <button class="btn btn-flex primary margmain" onclick="showDraft(event, 'newdraftbox', null)" id="uploadButton">Upload New Draft</button>
+    {%endif%}
 
-{% endblock content%}
+    <!-- Comments -->
+    {%for draft in drafts%}
+        <div id="comments{{draft.dnum}}" class="commentbox" style="display:none">
+            <h2 style="margin-top: 32px;">Comments</h2>
+            {% if comments %}
+                <div class="commentset">
+                    {% for comment in comments %}
+                        {%if comment.draft == draft%}
+                            <div class="comment">
+                                <p class="reg semibold btn-flex">{{comment.commenter.name}} <span class="xs med dgray100">{{comment.date}}</span></p>
+                                <p class="reg">{{comment.content}}</p>
+                            </div>
+                        {%endif%}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <form method="post" action="{% url 'commentadd' draft.pk %}">
+                {% csrf_token %}
+                <div class="field-flex" style="margin-top: 32px">
+                    <label class="label" for="id_comment">Add a comment</label>
+                    <input class="textarea" style="width: 100%;" name="commentinput" type="textarea" id="id_comment" />
+                </div>
+                <input class="btn btn-flex primary" style="margin: 24px 0px;" type="submit" name="submit" value="Post Comment"/>
+            </form>
+        </div>
+    {%endfor%}
+{% endif %}
+
+<!-- Set default clicked tab -->
+{% if drafts.count == 1 %}
+    <script>
+        document.body.onload = function() {
+            document.getElementById("tabbutton1").click();
+        }
+    </script>
+{% elif drafts.count == 2 %}
+    <script>
+        document.body.onload = function() {
+            document.getElementById("tabbutton2").click();
+        }
+    </script>
+{% elif drafts.count == 3 %}
+    <script>
+        document.body.onload = function() {
+            document.getElementById("tabbutton3").click();
+        }
+    </script>
+{% endif %}
+
+{% endblock %}

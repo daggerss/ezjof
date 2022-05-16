@@ -32,7 +32,7 @@
             <p class="med"> Department: {{jof.department}}  </p>
             {% endif %}
             <span class="chip semibold bgsucc600"> Completed </span>
-            <a href="{% url 'jofview' jof.pk %}"><button class="btn btn-full primary">View</button></a>
+            <a href="{% url 'joftracker' jof.pk %}"><button class="btn btn-full primary">View</button></a>
         </div> 
     {% endif %}
     {% endfor %}

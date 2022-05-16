@@ -665,8 +665,15 @@ fieldset > .btn
 {
     display: flex;
     flex-direction: row;
-    gap: 37px;
+    gap: 36px;
     margin: 24px 0px;
+}
+
+.fieldcol-flex
+{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 /* Indiv JOF Tracker Styles */
@@ -711,18 +718,26 @@ fieldset > .btn
     flex-direction: row;
     align-items: flex-start;
     gap: 36px;
+    margin: 16px 0px;
 }
 
 .pub
 {
     display: inline;
-    width: 495px;
-    margin: 16px 0px;
+    width: 450px;
 }
 
 #uploadButton.tabactive
 {
     display: none;
+}
+
+#newdraftbox.draftbox
+{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0px 0px 24px;
 }
 
 .commentset

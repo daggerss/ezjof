@@ -8,12 +8,12 @@
 
     {% if jof.status == 1 %}
     <span class="chip semibold bginfo500 margmain"> Pending approval </span>
-    {% endif %}
-    {% if jof.status == 2 %}
+    {% elif jof.status == 2 %}
     <span class="chip semibold bgwarn500 margmain"> In progress </span>
-    {% endif %}
-    {% if jof.status == 3 %}
+    {% elif jof.status == 3 %}
     <span class="chip semibold bgerror500 margmain"> Not taken </span>
+    {% elif jof.status == 4 %}
+    <span class="chip semibold bgsucc600 margmain"> Completed </span>
     {% endif %}
 
 {% endblock %}
@@ -31,10 +31,12 @@
 
 <p class="reg">{{jof.summary}}</p>
 
+{% if jof.status != 4 %}
 <h2>Specifications</h2>
 <p class="reg med dgray100">Deliverable Type: {{jof.get_type_display}}</p>
 <p class="reg med dgray100">Deliverable Pegs: <a href="{{jof.pegs}}">{{jof.pegs}}</a></p>
 <p class="reg">{{jof.description}}</p>
+{% endif %}
 
 {% if jof.status == 3 %}
     <h2>Spiel</h2>
@@ -63,6 +65,7 @@
                 <script>
                     var div = document.createElement("div");
                     var spiel = document.createElement("p");
+                    spiel.style.width = "648px";
                     spiel.innerHTML = "{{draft.spiel}}";
                     var img = document.createElement('img');
                     img.className+=" pub";
@@ -98,7 +101,7 @@
             }
         
             
-            document.getElementById(draftId).style.display = "block";
+            document.getElementById(draftId).style.display = "flex";
             if(commentId!=null)
             {
             document.getElementById(commentId).style.display = "block";
@@ -116,17 +119,14 @@
     {% if account == jof.artist and drafts.count < 3%}
     <div id="newdraftbox" class="draftbox margmain" style="display: none">
         <h2>Upload New Draft</h2>
-        <form method="post" action="{% url 'draftupload' jof.pk %}" enctype="multipart/form-data">
+        <form class="fieldcol-flex" method="post" action="{% url 'draftupload' jof.pk %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="fieldrow-flex">
-                <div class="field-flex pub">
-                    <label class="label" for="id_file">File Upload</label>
-                    <input name="fileinput" type="file" id="id_file" />
-                </div>
-                <div class="field-flex">
-                    <label class="label" for="id_spiel">Spiel</label>
-                    <input class="textarea" style="width: 707px;" name="spielinput" type="textarea" id="id_spiel" />
-                </div>
+            <div class="field-flex pub">
+                <input name="fileinput" type="file" id="id_file" />
+            </div>
+            <div class="field-flex">
+                <label class="label" for="id_spiel">Spiel</label>
+                <input class="textarea" name="spielinput" type="textarea" id="id_spiel" />
             </div>
             <input class="btn btn-flex primary" type="submit" name="submit" value="Submit Draft"/>
         </form>

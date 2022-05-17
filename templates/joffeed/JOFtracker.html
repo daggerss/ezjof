@@ -52,12 +52,15 @@
     {% endif %}
     
 {% else %}
-    {% if account == jof.client and drafts.count > 0 and jof.status != 4 %}
+    {% if account.type == 'Client' and drafts.count > 0 and jof.status != 4 %}
     <a href="{% url 'joffinish' jof.pk %}"><button class="btn btn-flex primary" style="margin-top: 16px;">Approve Deliverable</button></a>
     {%endif%}
+
     {%if jof.status == 4%}
-    <a id="downloadbutton" href="" download="final"><button class="btn btn-flex primary">Download</button></a>
-    <button id="copybutton" name="" class="btn btn-flex primary" onclick="copySpiel()">Copy Spiel</button>
+    <div class="fieldrow-flex" style="gap: 16px; margin-bottom: 0px;">
+        <a id="downloadbutton" href="" download="final"><button class="btn btn-flex primary">Download Pub</button></a>
+        <button id="copybutton" name="" class="btn btn-flex primary" onclick="copySpiel()">Copy Spiel</button>
+    </div>
     <script>
         function copySpiel()
         {
@@ -204,12 +207,13 @@
                                 <p class="reg semibold btn-flex">{{comment.commenter.name}} <span class="xs med dgray100">{{comment.date}}</span></p>
                                 <p class="reg" style="word-wrap: break-word;">{{comment.content|linebreaks}}</p>
                             </div>
+                        {% else %}
+                            {% if forloop.counter == comments.count and jof.status ==  4 %}
+                                <p class="reg error600">No comments were made on this draft.</p>
+                            {% endif %}
                         {%endif%}
                     {% endfor %}
                 </div>
-            {% endif %}
-            {% if comments != None and jof.status == 4 %}
-                <p class="reg error600">No comments were made on this draft.</p>
             {% endif %}
             {% if jof.status != 4 %}
             <form method="post" action="{% url 'commentadd' draft.pk %}">

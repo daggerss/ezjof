@@ -52,7 +52,7 @@
     {% endif %}
     
 {% else %}
-    {% if account == jof.client and drafts.count > 0 and jof.status != 4 %}
+    {% if account.type == 'Client' and drafts.count > 0 and jof.status != 4 %}
     <a href="{% url 'joffinish' jof.pk %}"><button class="btn btn-flex primary" style="margin-top: 16px;">Approve Deliverable</button></a>
     {%endif%}
 

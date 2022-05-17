@@ -41,9 +41,9 @@ class JOF(models.Model):
     description = models.CharField(max_length=500, default='')
     date = models.DateField()
     pegs = models.URLField(null=True, blank=True, default='')
-    summary = models.CharField(max_length=500, default='')
+    summary = models.TextField(max_length=500, default='')
     type = models.IntegerField(choices=JOF_TYPE_CHOICES, default=OTHER)
-    spiel = models.CharField(max_length=2200, default='')
+    spiel = models.TextField(max_length=2200, default='')
     client = models.ForeignKey(Account, related_name='Client', on_delete=models.CASCADE, default=NULL)
     artist = models.ForeignKey(Account, related_name='Artist', on_delete=models.CASCADE, default=NULL, blank=True, null=True)
     department = models.ForeignKey(Department, related_name='Department', on_delete=models.CASCADE, default=NULL)
@@ -51,7 +51,7 @@ class JOF(models.Model):
           
 class Draft(models.Model):
     jof = models.ForeignKey(JOF, on_delete=models.CASCADE, default=NULL)
-    spiel = models.CharField(max_length=2200, default='')
+    spiel = models.TextField(max_length=2200, default='')
     file = models.FileField(null=True, blank=True, default='')
     dnum = models.IntegerField()
     objects = models.Manager()
@@ -60,7 +60,7 @@ class Comment(models.Model):
     draft = models.ForeignKey(Draft, on_delete=models.CASCADE, default=NULL)
     commenter = models.ForeignKey(Account, on_delete=models.CASCADE, default=NULL)
     date = models.DateField()
-    content = models.CharField(max_length=500)
+    content = models.TextField(max_length=500)
     objects = models.Manager()
 
 # Create your models here.

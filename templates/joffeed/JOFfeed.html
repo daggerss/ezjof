@@ -20,7 +20,7 @@
             <p class="med">Standard | Blast Date: {{jof.date}}</p>
             {% endif %}
             {% if account.type == 'Artist' %}
-            <p class="med"> Department: {{jof.department.dname}}  </p>
+            <p class="med"> Department: {{jof.client.department.dname}}  </p>
             {% endif %}
             <div class="btn-flex">
                 <a href="{% url 'joftracker' jof.pk %}"><button class="btn btn-half secondary">View</button></a>

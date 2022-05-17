@@ -29,7 +29,7 @@
             <h2 class="prim700 semibold"> {{jof.name}} </h2>
             <p class="med"> Blast Date: {{jof.date}}  </p>
             {% if account.type == 'Artist' %}
-            <p class="med"> Department: {{jof.department}}  </p>
+            <p class="med"> Department: {{jof.client.department.dname}}  </p>
             {% endif %}
             <span class="chip semibold bgsucc600"> Completed </span>
             <a href="{% url 'joftracker' jof.pk %}"><button class="btn btn-full primary">View</button></a>

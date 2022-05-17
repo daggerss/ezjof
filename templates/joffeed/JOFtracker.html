@@ -18,6 +18,7 @@
 
 {% endblock %}
 
+
 {% block title %} {{jof.name}} {% endblock %}
 {% block heading %} {{jof.name}}{% endblock %}
 
@@ -66,7 +67,10 @@
                     var div = document.createElement("div");
                     var spiel = document.createElement("p");
                     spiel.style.width = "648px";
-                    spiel.innerHTML = "{{draft.spiel}}";
+                    spiel.style.wordBreak = "break-word";
+                    spiel.style.whiteSpace = "pre-wrap";
+                    spiel.innerHTML = "{{draft.spiel|linebreaks}}";
+                    
                     var img = document.createElement('img');
                     img.className+=" pub";
                     img.src = "{{draft.file.url}}";
@@ -105,6 +109,7 @@
             if(commentId!=null)
             {
             document.getElementById(commentId).style.display = "block";
+            
             }
             evt.currentTarget.className += " tabactive";
 
@@ -126,7 +131,7 @@
             </div>
             <div class="field-flex">
                 <label class="label" for="id_spiel">Spiel</label>
-                <input class="textarea" name="spielinput" type="textarea" id="id_spiel" />
+                <textarea class="textarea" name="spielinput" style="word-wrap: break-word" id="id_spiel"></textarea>
             </div>
             <input class="btn btn-flex primary" type="submit" name="submit" value="Submit Draft"/>
         </form>
@@ -144,7 +149,7 @@
                         {%if comment.draft == draft%}
                             <div class="comment">
                                 <p class="reg semibold btn-flex">{{comment.commenter.name}} <span class="xs med dgray100">{{comment.date}}</span></p>
-                                <p class="reg">{{comment.content}}</p>
+                                <p class="reg" style="word-wrap: break-word; ; width: 100vw;">{{comment.content}}</p>
                             </div>
                         {%endif%}
                     {% endfor %}
@@ -154,7 +159,8 @@
                 {% csrf_token %}
                 <div class="field-flex" style="margin-top: 32px">
                     <label class="label" for="id_comment">Add a comment</label>
-                    <input class="textarea" style="width: 100%;" name="commentinput" type="textarea" id="id_comment" />
+                    <textarea class="textarea" style="width: 100vw; word-wrap: break-word" name="commentinput" id="id_comment"></textarea>
+                    
                 </div>
                 <input class="btn btn-flex primary" style="margin: 24px 0px;" type="submit" name="submit" value="Post Comment"/>
             </form>

@@ -46,9 +46,11 @@
     {% else %}
     <p class="reg error600">No spiel was provided by the client.</p>
     {% endif %}
-    {% if account == jof.artist %}
+
+    {% if account.type == 'Artist' %}
     <a href="{% url 'jofaccept' jof.pk%}"><button class="btn btn-flex primary margmain" style="margin-top: 32px;">Accept</button></a>
     {% endif %}
+    
 {% else %}
     {% if account == jof.client and drafts.count > 0 and jof.status != 4 %}
     <a href="{% url 'joffinish' jof.pk %}"><button class="btn btn-flex primary" style="margin-top: 16px;">Approve Deliverable</button></a>
@@ -154,6 +156,9 @@
                         {%endif%}
                     {% endfor %}
                 </div>
+            {% endif %}
+            {% if comments != None and jof.status == 4 %}
+                <p class="reg error600">No comments were made on this draft.</p>
             {% endif %}
             {% if jof.status != 4 %}
             <form method="post" action="{% url 'commentadd' draft.pk %}">

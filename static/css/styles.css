@@ -114,7 +114,7 @@ h1
     line-height: 40px;
 }
 
-h1, h2
+h1, main > h2
 {
     margin: 16px 0px 8px;
 }

@@ -47,7 +47,9 @@
     <p class="reg error600">No spiel was provided by the client.</p>
     {% endif %}
 
+    {% if account == jof.artist %}
     <a href="{% url 'jofaccept' jof.pk%}"><button class="btn btn-half primary margmain" style="margin-top: 32px;">Accept</button></a>
+    {% endif %}
 
 {% else %}
     {%if account == jof.client and drafts.count > 0 and jof.status != 4 %}

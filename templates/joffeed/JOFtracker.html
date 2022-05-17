@@ -55,6 +55,17 @@
     {%if account == jof.client and drafts.count > 0 and jof.status != 4 %}
     <a href="{% url 'joffinish' jof.pk %}"><button class="btn btn-flex primary">Approve Deliverable</button></a>
     {%endif%}
+    {%if jof.status == 4%}
+    <a id="downloadbutton" href="" download="final"><button class="btn btn-flex primary">Download</button></a>
+    <button id="copybutton" name="" class="btn btn-flex primary" onclick="copySpiel()">Copy Spiel</button>
+    <script>
+        function copySpiel()
+        {
+            spiel = document.getElementById("copybutton").href;
+            navigator.clipboard.writeText(spiel);
+        }
+    </script>
+    {%endif%}
 
     <!-- Draft Tabs -->
     {% if drafts.count > 0 %}
@@ -72,6 +83,7 @@
                     spiel.style.wordBreak = "break-word";
                     spiel.style.whiteSpace = "pre-wrap";
                     spiel.innerHTML = "{{draft.spiel|linebreaks}}";
+                    spiel.className += " spiel";
                     
                     var img = document.createElement('img');
                     img.className+=" pub";
@@ -82,6 +94,8 @@
                     div.style.display = "none";
                     
                     document.getElementById("drafts").append(div);
+
+                    
                 </script>
             {%endfor%}
         </div>
@@ -167,6 +181,14 @@
                 <input class="btn btn-flex primary" style="margin: 24px 0px;" type="submit" name="submit" value="Post Comment"/>
             </form>
         </div>
+        {%if draft.dnum == drafts.count %}
+        <script>
+            
+            document.getElementById("downloadbutton").href = draft.file.url;
+            document.getElementById("copybutton").href = draft.spiel;
+            console.log(draft.spiel);
+        </script>
+        {%endif%}
     {%endfor%}
 {% endif %}
 
@@ -174,19 +196,26 @@
 {% if drafts.count == 1 %}
     <script>
         document.body.onload = function() {
+            
             document.getElementById("tabbutton1").click();
+            
+            
         }
     </script>
 {% elif drafts.count == 2 %}
     <script>
         document.body.onload = function() {
+            
             document.getElementById("tabbutton2").click();
+            
         }
     </script>
 {% elif drafts.count == 3 %}
     <script>
-        document.body.onload = function() {
+        document.body.onload = function() { 
+            
             document.getElementById("tabbutton3").click();
+            
         }
     </script>
 {% endif %}

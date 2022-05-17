@@ -279,6 +279,13 @@ button
     background: #1EC1C8;
 }
 
+.primary:disabled
+{
+    background: #E2E4E8;
+    color: #B2B7C2;
+    cursor: default;
+}
+
 .secondary
 {
     background: none;
@@ -290,6 +297,12 @@ button
 .secondary:hover
 {
     background: #DFF6F6;
+}
+
+.secondary:disabled
+{
+    background: #EEEFF2;
+    color: #B2B7C2;
 }
 
 /* EZJOF Form Styles */

@@ -61,20 +61,6 @@
         <a id="downloadbutton" href="" download="final"><button class="btn btn-flex primary">Download Pub</button></a>
         <button id="copybutton" name="" class="btn btn-flex primary" onclick="copySpiel()">Copy Spiel</button>
     </div>
-    <script>
-        function copySpiel()
-        {
-            
-
-            const mySmartTextarea = document.createElement('textarea');
-            mySmartTextarea.innerHTML = document.getElementById("finalspiel").innerText;
-            const parentElement = document.body.appendChild(mySmartTextarea);
-            mySmartTextarea.select();
-            document.execCommand('copy');
-            parentElement.removeChild(mySmartTextarea);
-        }
-        
-    </script>
     {%endif%}
 
     <!-- Draft Tabs -->
@@ -105,9 +91,6 @@
                         div.style.display = "none";
                         
                         document.getElementById("drafts").append(div);
-
-                        
-                        
                     </script>
 
                 {%elif draft.dnum == drafts.count %}
@@ -133,48 +116,11 @@
                     document.getElementById("drafts").append(div);
 
                     document.getElementById("downloadbutton").href = "{{draft.file.url}}";
-                    
                 </script>
-
                 {%endif%}
             {%endfor%}
         </div>
     {% endif %}
-    <script>
-        function showDraft(evt, draftId, commentId) {
-            
-            var i, drafts, buttons, comments;
-        
-            drafts = document.getElementsByClassName("draftbox");
-            for (i = 0; i < drafts.length; i++) {
-            drafts[i].style.display = "none";
-            }
-        
-            comments = document.getElementsByClassName("commentbox");
-            for (i = 0; i < comments.length; i++) {
-            comments[i].style.display = "none";
-            }
-
-            buttons = document.getElementsByClassName("tabbutton");
-            for (i = 0; i < buttons.length; i++) {
-            buttons[i].className = buttons[i].className.replace(" tabactive", "");
-            }
-        
-            
-            document.getElementById(draftId).style.display = "flex";
-            if(commentId!=null)
-            {
-            document.getElementById(commentId).style.display = "block";
-            
-            }
-            evt.currentTarget.className += " tabactive";
-
-            if (draftId != "newdraftbox")
-            {
-                document.getElementById("uploadButton").classList.remove("tabactive");
-            }
-        }
-    </script>
 
     <!-- Upload -->
     {% if account == jof.artist and drafts.count < 3 and jof.status != 4 %}
@@ -207,10 +153,6 @@
                                 <p class="reg semibold btn-flex">{{comment.commenter.name}} <span class="xs med dgray100">{{comment.date}}</span></p>
                                 <p class="reg" style="word-wrap: break-word;">{{comment.content|linebreaks}}</p>
                             </div>
-                        {% else %}
-                            {% if forloop.counter == comments.count and jof.status ==  4 %}
-                                <p class="reg error600">No comments were made on this draft.</p>
-                            {% endif %}
                         {%endif%}
                     {% endfor %}
                 </div>
@@ -232,29 +174,29 @@
 <!-- Set default clicked tab -->
 {% if drafts.count == 1 %}
     <script>
-        document.body.onload = function() {
-            
+        document.body.onload = function()
+        {
             document.getElementById("tabbutton1").click();
-            
-            
         }
     </script>
 {% elif drafts.count == 2 %}
     <script>
-        document.body.onload = function() {
-            
+        document.body.onload = function()
+        {    
             document.getElementById("tabbutton2").click();
-            
         }
     </script>
 {% elif drafts.count == 3 %}
     <script>
-        document.body.onload = function() { 
-            
+        document.body.onload = function()
+        {    
             document.getElementById("tabbutton3").click();
-            
         }
     </script>
 {% endif %}
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/trackerfunc_script.js' %}"></script>
 {% endblock %}

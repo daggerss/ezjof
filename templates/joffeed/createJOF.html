@@ -30,7 +30,7 @@
         <div class="field-flex" style="margin: 24px 0px 64px;">
             {{ form.summary.errors }}
             <label class="label" for="{{ form.summary.id_for_label }}">Purpose</label>
-            <textarea name="summary" style="word-wrap: break-word" maxlength="500" required id="id_summary"></textarea>
+            <textarea name="summary" class="textarea" maxlength="500" required id="id_summary"></textarea>
         </div>
 
         <h2>Specifications</h2>
@@ -49,12 +49,12 @@
         <div class="field-flex" style="margin: 24px 0px;">
             {{ form.description.errors }}
             <label class="label" for="{{ form.description.id_for_label }}">Contents</label>
-            <textarea type="text" name="description" style="word-wrap: break-word" maxlength="500" required id="id_description"></textarea>
+            <textarea type="text" name="description" class="textarea" maxlength="500" required id="id_description"></textarea>
         </div>
         <div class="field-flex" style="margin: 24px 0px 48px;">
             {{ form.spiel.errors }}
             <label class="label" for="{{ form.spiel.id_for_label }}">Spiel (Leave blank if artist will provide)</label>
-            <textarea type="text" name="spiel" style="word-wrap: break-word" maxlength="500" id="id_spiel"></textarea>
+            <textarea type="text" name="spiel" class="textarea" maxlength="2200" id="id_spiel"></textarea>
         </div>
             <input class="btn btn-half primary" style="margin-bottom: 64px;" type="submit" value="Submit"></button>
     </form>

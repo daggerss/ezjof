@@ -19,8 +19,8 @@
 {% endblock %}
 
 
-{% block title %} {{jof.name}} {% endblock %}
-{% block heading %} {{jof.name}}{% endblock %}
+{% block title %}{{jof.name}}{% endblock %}
+{% block heading %}{{jof.name}}{% endblock %}
 
 {% block content %}
 
@@ -30,30 +30,30 @@
 <p class="reg med dgray100">Standard | Blast Date: {{jof.date}}</p>
 {% endif %}
 
-<p class="reg">{{jof.summary}}</p>
+<p class="reg">{{jof.summary|linebreaks}}</p>
 
 {% if jof.status != 4 %}
 <h2>Specifications</h2>
 <p class="reg med dgray100">Deliverable Type: {{jof.get_type_display}}</p>
 <p class="reg med dgray100">Deliverable Pegs: <a href="{{jof.pegs}}">{{jof.pegs}}</a></p>
-<p class="reg">{{jof.description}}</p>
+<p class="reg">{{jof.description|linebreaks}}</p>
 {% endif %}
 
 {% if jof.status == 3 %}
     <h2>Spiel</h2>
     {% if jof.spiel %}
-    <p class="reg">{{jof.spiel}}</p>
-    {% elif jof.spiel != None %}
+    <p class="reg">{{jof.spiel|linebreaks}}</p>
+    {% else %}
     <p class="reg error600">No spiel was provided by the client.</p>
     {% endif %}
 
-    {% if account == jof.artist %}
-    <a href="{% url 'jofaccept' jof.pk%}"><button class="btn btn-half primary margmain" style="margin-top: 32px;">Accept</button></a>
+    {% if account.type == 'Artist' %}
+    <a href="{% url 'jofaccept' jof.pk%}"><button class="btn btn-flex primary margmain" style="margin-top: 32px;">Accept</button></a>
     {% endif %}
-
+    
 {% else %}
-    {%if account == jof.client and drafts.count > 0 and jof.status != 4 %}
-    <a href="{% url 'joffinish' jof.pk %}"><button class="btn btn-flex primary">Approve Deliverable</button></a>
+    {% if account == jof.client and drafts.count > 0 and jof.status != 4 %}
+    <a href="{% url 'joffinish' jof.pk %}"><button class="btn btn-flex primary" style="margin-top: 16px;">Approve Deliverable</button></a>
     {%endif%}
     {%if jof.status == 4%}
     <a id="downloadbutton" href="" download="final"><button class="btn btn-flex primary">Download</button></a>
@@ -137,7 +137,7 @@
     </script>
 
     <!-- Upload -->
-    {% if account == jof.artist and drafts.count < 3%}
+    {% if account == jof.artist and drafts.count < 3 and jof.status != 4 %}
     <div id="newdraftbox" class="draftbox margmain" style="display: none">
         <h2>Upload New Draft</h2>
         <form class="fieldcol-flex" method="post" action="{% url 'draftupload' jof.pk %}" enctype="multipart/form-data">
@@ -147,12 +147,12 @@
             </div>
             <div class="field-flex">
                 <label class="label" for="id_spiel">Spiel</label>
-                <textarea class="textarea" name="spielinput" style="word-wrap: break-word" id="id_spiel"></textarea>
+                <textarea class="textarea" name="spielinput" style="width: 100%;" id="id_spiel"></textarea>
             </div>
             <input class="btn btn-flex primary" type="submit" name="submit" value="Submit Draft"/>
         </form>
     </div>
-    <button class="btn btn-flex primary margmain" onclick="showDraft(event, 'newdraftbox', null)" id="uploadButton">Upload New Draft</button>
+    <button class="btn btn-flex primary margmain" style="margin-top: 24px;" onclick="showDraft(event, 'newdraftbox', null)" id="uploadButton">Upload New Draft</button>
     {%endif%}
 
     <!-- Comments -->
@@ -165,21 +165,24 @@
                         {%if comment.draft == draft%}
                             <div class="comment">
                                 <p class="reg semibold btn-flex">{{comment.commenter.name}} <span class="xs med dgray100">{{comment.date}}</span></p>
-                                <p class="reg" style="word-wrap: break-word; ; width: 100vw;">{{comment.content}}</p>
+                                <p class="reg" style="word-wrap: break-word;">{{comment.content|linebreaks}}</p>
                             </div>
                         {%endif%}
                     {% endfor %}
                 </div>
             {% endif %}
+            {% if comments != None and jof.status == 4 %}
+                <p class="reg error600">No comments were made on this draft.</p>
+            {% endif %}
+            {% if jof.status != 4 %}
             <form method="post" action="{% url 'commentadd' draft.pk %}">
                 {% csrf_token %}
                 <div class="field-flex" style="margin-top: 32px">
-                    <label class="label" for="id_comment">Add a comment</label>
-                    <textarea class="textarea" style="width: 100vw; word-wrap: break-word" name="commentinput" id="id_comment"></textarea>
-                    
+                    <textarea class="textarea" style="width: 100%;" name="commentinput" placeholder="Add a comment..." id="id_comment"></textarea>
                 </div>
                 <input class="btn btn-flex primary" style="margin: 24px 0px;" type="submit" name="submit" value="Post Comment"/>
             </form>
+            {% endif %}
         </div>
         {%if draft.dnum == drafts.count %}
         <script>

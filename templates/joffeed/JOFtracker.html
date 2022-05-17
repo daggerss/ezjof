@@ -61,9 +61,16 @@
     <script>
         function copySpiel()
         {
-            spiel = document.getElementById("copybutton").href;
-            navigator.clipboard.writeText(spiel);
+            
+
+            const mySmartTextarea = document.createElement('textarea');
+            mySmartTextarea.innerHTML = document.getElementById("finalspiel").innerHTML;
+            const parentElement = document.body.appendChild(mySmartTextarea);
+            mySmartTextarea.select();
+            document.execCommand('copy');
+            parentElement.removeChild(mySmartTextarea);
         }
+        
     </script>
     {%endif%}
 
@@ -76,14 +83,41 @@
                 {%endfor%}
             </div>
             {%for draft in drafts%}
+                {%if draft.dnum != drafts.count %}
+                    <script>
+                        var div = document.createElement("div");
+                        var spiel = document.createElement("p");
+                        spiel.style.width = "648px";
+                        spiel.style.wordBreak = "break-word";
+                        spiel.style.whiteSpace = "pre-wrap";
+                        spiel.innerHTML = "{{draft.spiel|linebreaks}}";
+                        
+                        
+                        var img = document.createElement('img');
+                        img.className+=" pub";
+                        img.src = "{{draft.file.url}}";
+                        div.id = "draft{{draft.dnum}}"
+                        div.append(img, spiel);
+                        div.className+=" draftbox deliv";
+                        div.style.display = "none";
+                        
+                        document.getElementById("drafts").append(div);
+
+                        
+                        
+                    </script>
+
+                {%elif draft.dnum == drafts.count %}
                 <script>
+
                     var div = document.createElement("div");
                     var spiel = document.createElement("p");
                     spiel.style.width = "648px";
                     spiel.style.wordBreak = "break-word";
                     spiel.style.whiteSpace = "pre-wrap";
                     spiel.innerHTML = "{{draft.spiel|linebreaks}}";
-                    spiel.className += " spiel";
+            
+                    spiel.id = "finalspiel"
                     
                     var img = document.createElement('img');
                     img.className+=" pub";
@@ -95,8 +129,11 @@
                     
                     document.getElementById("drafts").append(div);
 
+                    document.getElementById("downloadbutton").href = "{{draft.file.url}}";
                     
                 </script>
+
+                {%endif%}
             {%endfor%}
         </div>
     {% endif %}
@@ -184,14 +221,7 @@
             </form>
             {% endif %}
         </div>
-        {%if draft.dnum == drafts.count %}
-        <script>
-            
-            document.getElementById("downloadbutton").href = draft.file.url;
-            document.getElementById("copybutton").href = draft.spiel;
-            console.log(draft.spiel);
-        </script>
-        {%endif%}
+        
     {%endfor%}
 {% endif %}
 

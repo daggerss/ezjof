@@ -144,7 +144,7 @@ def commentadd(request, pk):
         comment = Comment.objects.create(draft=draft, commenter=account, date=datetime.today(),content=content)
         comment.save()
         dcount = Draft.objects.filter(jof = draft.jof).count()
-        if(dcount<3 & draft.jof.status!=4):
+        if(dcount<3 and draft.jof.status!=4):
             draft.jof.status = 2
             draft.jof.save()
     return redirect('joftracker', draft.jof.id)

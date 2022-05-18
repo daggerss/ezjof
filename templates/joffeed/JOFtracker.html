@@ -85,6 +85,7 @@
                         var img = document.createElement('img');
                         img.className+=" pub";
                         img.src = "{{draft.file.url}}";
+                        img.alt = "{{draft.file.url}}";
                         div.id = "draft{{draft.dnum}}"
                         div.append(img, spiel);
                         div.className+=" draftbox deliv";

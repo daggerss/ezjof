@@ -14,7 +14,7 @@
         <img id="logotype" class="center" src="{% static 'images/Logotype.svg' %}" alt="EZJOF Logo">
     </header>
 
-    <main>
+    <main class="navless">
         <form id="msform" method="post" action="{% url 'signup_save' %}">
             <!-- progressbar -->
             {% csrf_token %} 

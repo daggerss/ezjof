@@ -11,16 +11,27 @@ html
     background: #FAFAFB;
 }
 
-body {
+body
+{
     font-family: 'Work Sans', sans-serif;
     color: #525C76;
     min-height: 100vh;
     position: relative;
 }
 
+body.navless
+{
+    overflow: hidden;
+}
+
 main
 {
     padding: 0px 64px 309px;
+}
+
+main.navless
+{
+    padding: 0;
 }
 
 /* Navigation */
@@ -435,7 +446,7 @@ input[type="checkbox"]:checked + label:before
 .loginabs
 {
     position: absolute;
-    bottom: 5%;
+    bottom: 7%;
     left: 40%;
 }
 
@@ -489,7 +500,6 @@ div.spacer
     border: 0 none;
     width: 50%;
     margin: 0 25%;
-    padding: 24px 0;
 
     /*stacking fieldsets above each other*/
     position: relative;
